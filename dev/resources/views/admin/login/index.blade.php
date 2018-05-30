@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>D'Jualaja | Login User</title>
+  <title>D'Jualaja | Login Admin</title>
 
    <!-- plugins:css -->
   <link rel="stylesheet" href="{{ url('dev/node_modules/mdi/css/materialdesignicons.min.css') }}" tppabs="http://www.bootstrapdash.com/demo/purple/node_modules/mdi/css/materialdesignicons.min.css">
