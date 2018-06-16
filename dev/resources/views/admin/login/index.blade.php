@@ -45,7 +45,7 @@
               {{-- <h3 class="card-title text-left mb-3">Login</h3> --}}
               <form id="login-form">
                 <div class="form-group">
-                  <label>Username <small style="color: #e2616a; display: none;" id="name_err"> &nbsp;- Tidak Boleh Kosong</small></label>
+                  <label>Nomor Induk Karyawan <small style="color: #e2616a; display: none;" id="name_err"> &nbsp;- Tidak Boleh Kosong</small></label>
                   <input type="text" class="input_validate form-control p_input" id="username" data-err="name" name="username">
                 </div>
                 <div class="form-group">

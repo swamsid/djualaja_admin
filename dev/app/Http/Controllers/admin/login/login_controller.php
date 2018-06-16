@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin\login;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\tb_employee;
 use Session;
 
 class login_controller extends Controller
@@ -16,9 +17,11 @@ class login_controller extends Controller
 			"status" => "gagal",
 			"message" => "Kombinasi Username Dan Password Tidak Sesuai"
 		];
-		
-		if($request->username == "admin" && $request->password == "123456"){
-			Session()->put("login_name", "Admin");
+
+		$employee = tb_employee::where("employee_number", $request->username)->where("employee_password", $request->password)->first();
+
+		if(count($employee) > 0){
+			Auth::login($employee);
 			$ret = [
 				"status" => "berhasil",
 				"message" => "Kombinasi Username Dan Password Tidak Sesuai"
@@ -29,9 +32,8 @@ class login_controller extends Controller
 	}
 
 	public function logout(){
-		Session()->forget("login_name");
-
-		return redirect()->route("login");
+        Auth::logout();
+        //return redirect('/');
 	}
 
 }

@@ -15,12 +15,20 @@
 //     return "aaa";
 // });
 
+route::get("/", function(){
+	if(Auth::check()){
+		return redirect()->route("dashboard");
+	}else{
+		return redirect()->route("login");
+	}
+});
+
 
 Route::group(['middleware' => 'guest'], function () {
 
 // login
 
-	Route::get("/", function(){
+	Route::get("/login", function(){
 		return view("admin.login.index");
 	})->name("login");
 
@@ -38,13 +46,10 @@ Route::group(['middleware' => 'guest'], function () {
 
 });
 
-Route::group(['middleware' => 'guest'], function () {
+Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/dashboard', function () {
-	    if(Session::has("login_name"))
-	    	return view('admin.dashboard.index');
-	    else
-	    	return redirect()->route("login");
+	    return view('admin.dashboard.index');
 	})->name("dashboard");
 
 
@@ -52,7 +57,7 @@ Route::group(['middleware' => 'guest'], function () {
 	// route master user start
 
 		Route::get("/master-user", [
-			'uses' 	=> 'data_master\master_user_controller@index',
+			'uses' 	=> 'admin\data_master\master_user_controller@index',
 			'as'	=> 'master_user.index'
 		]);
 
