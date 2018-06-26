@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin\login;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\tb_employee;
 use Session;
 
@@ -18,9 +19,9 @@ class login_controller extends Controller
 			"message" => "Kombinasi Username Dan Password Tidak Sesuai"
 		];
 
-		$employee = tb_employee::where("employee_number", $request->username)->where("employee_password", $request->password)->first();
+		$employee = tb_employee::where("employee_number", $request->username)->first();
 
-		if(count($employee) > 0){
+		if($employee && Hash::check('secret_'.$request->password, $employee->employee_password)){
 			Auth::login($employee);
 			$ret = [
 				"status" => "berhasil",
@@ -33,7 +34,7 @@ class login_controller extends Controller
 
 	public function logout(){
         Auth::logout();
-        //return redirect('/');
+        return redirect('/');
 	}
 
 }

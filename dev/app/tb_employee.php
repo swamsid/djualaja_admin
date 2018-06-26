@@ -21,5 +21,7 @@ class tb_employee extends Model implements AuthenticatableContract, CanResetPass
       CONST CREATED_AT = "employee_created_at";
       CONST UPDATED_AT = "employee_updated_at";
 
+      public $fillable = ["employee_number", "employee_name", "employee_password"];
+
       
 }

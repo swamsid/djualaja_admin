@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url("/dashboard") }}" tppabs="http://www.bootstrapdash.com/demo/purple/index.html">
+              <a class="nav-link" href="{{ url('/dashboard') }}">
                 <span class="menu-title">Dashboard</span>
                 {{-- <span class="menu-sub-title">( 2 new updates )</span> --}}
                 <i class="mdi mdi-home menu-icon"></i>
@@ -17,7 +17,15 @@
               <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> 
-                    <a class="nav-link" href="{{ url("/master-user") }}" tppabs="http://www.bootstrapdash.com/demo/purple/pages/layout/boxed-layout.html">Master User &nbsp;<small>( Pengiklan )</small></a>
+                    <a class="nav-link" href="{{ url('/master_user') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Pengiklan</a>
+                  </li>
+
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ url('/master_kategori') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Kategori</a>
+                  </li>
+
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ url('/master_sub_kategori') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Sub Kategori</a>
                   </li>
                 </ul>
               </div>

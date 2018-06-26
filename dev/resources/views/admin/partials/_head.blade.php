@@ -1,6 +1,7 @@
 <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>D'Jualaja | @yield("title")</title>
   
   <!-- plugins:css -->
@@ -19,5 +20,7 @@
   <!-- endinject -->
 
   <link rel="shortcut icon" href="{{ asset('images/favicon_d.png') }}" />
+  <link rel="stylesheet" href="{{ asset('js/plugins/jquery-toast-plugin-master/dist/jquery.toast.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('js/plugins/jquery-confirm-master/dist/jquery-confirm.min.css') }}">
 
   @yield("extra_styles")

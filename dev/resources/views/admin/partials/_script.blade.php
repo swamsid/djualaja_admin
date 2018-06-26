@@ -16,6 +16,9 @@
 <script src="{{ asset('js/misc.js') }}" tppabs="http://www.bootstrapdash.com/demo/purple/js/misc.js"></script>
 <script src="{{ asset('js/settings.js') }}" tppabs="http://www.bootstrapdash.com/demo/purple/js/settings.js"></script>
 <script src="{{ asset('js/todolist.js') }}" tppabs="http://www.bootstrapdash.com/demo/purple/js/todolist.js"></script>
+<script src="{{ asset('js/plugins/jquery-toast-plugin-master/dist/jquery.toast.min.js') }}"></script>
+<script src="{{ asset('js/plugins/jquery-confirm-master/dist/jquery-confirm.min.js') }}"></script>
+{{-- <script src="{{ asset('js/lodash.js') }}"></script> --}}
 <!-- endinject -->
 
 <script>

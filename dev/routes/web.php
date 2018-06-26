@@ -11,9 +11,9 @@
 |
 */
 
-// Route::get('test', function () {
-//     return "aaa";
-// });
+Route::get('/test', function () {
+    return view("welcome");
+});
 
 route::get("/", function(){
 	if(Auth::check()){
@@ -37,16 +37,21 @@ Route::group(['middleware' => 'guest'], function () {
 		'as'	=> 'login.authenticate'
 	]);
 
-	route::get("/logout", [
-		'uses'	=> 'admin\login\login_controller@logout',
-		'as'	=> 'logout'
-	]);
+	Route::get("/master-user/test/create", [
+			'uses' 	=> 'admin\data_master\master_user_controller@test_create',
+			'as'	=> 'master_user.test_create'
+		]);
 
 // end login
 
 });
 
 Route::group(['middleware' => 'auth'], function () {
+
+	route::get("/logout", [
+		'uses'	=> 'admin\login\login_controller@logout',
+		'as'	=> 'logout'
+	]);
 
 	Route::get('/dashboard', function () {
 	    return view('admin.dashboard.index');
@@ -56,11 +61,80 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// route master user start
 
-		Route::get("/master-user", [
+		Route::get("/master_user", [
 			'uses' 	=> 'admin\data_master\master_user_controller@index',
 			'as'	=> 'master_user.index'
 		]);
 
+		// Route::get("/master-user/test/create", [
+		// 	'uses' 	=> 'admin\data_master\master_user_controller@test_create',
+		// 	'as'	=> 'master_user.test_create'
+		// ]);
+
 	// route master user end
+
+
+	// route master kategori start
+
+		Route::get("/master_kategori", [
+			'uses' 	=> 'admin\data_master\master_kategori_controller@index',
+			'as'	=> 'master_kategori.index'
+		]);
+
+		Route::get("/master_kategori/select_list", [
+			'uses' 	=> 'admin\data_master\master_kategori_controller@select_list',
+			'as'	=> 'master_kategori.select_list'
+		]);
+
+		Route::get("/master_kategori/list", [
+			'uses'	=> 'admin\data_master\master_kategori_controller@list',
+			'as'	=> 'master_kategori.list'
+		]);
+
+		Route::post("/master_kategori/save", [
+			'uses' 	=> 'admin\data_master\master_kategori_controller@save',
+			'as'	=> 'master_kategori.save'
+		]);
+
+		Route::post("/master_kategori/update", [
+			'uses' 	=> 'admin\data_master\master_kategori_controller@update',
+			'as'	=> 'master_kategori.update'
+		]);
+
+		Route::post("/master_kategori/delete", [
+			'uses' 	=> 'admin\data_master\master_kategori_controller@delete',
+			'as'	=> 'master_kategori.delete'
+		]);
+
+	// route master kategori end
+
+	// route master Sub kategori start
+
+		Route::get("/master_sub_kategori", [
+			'uses' 	=> 'admin\data_master\master_sub_kategori_controller@index',
+			'as'	=> 'master_sub_kategori.index'
+		]);
+
+		Route::get("/master_sub_kategori/list", [
+			'uses'	=> 'admin\data_master\master_sub_kategori_controller@list',
+			'as'	=> 'master_sub_kategori.list'
+		]);
+
+		Route::post("/master_sub_kategori/save", [
+			'uses' 	=> 'admin\data_master\master_sub_kategori_controller@save',
+			'as'	=> 'master_sub_kategori.save'
+		]);
+
+		Route::post("/master_sub_kategori/update", [
+			'uses' 	=> 'admin\data_master\master_sub_kategori_controller@update',
+			'as'	=> 'master_sub_kategori.update'
+		]);
+
+		Route::post("/master_sub_kategori/delete", [
+			'uses' 	=> 'admin\data_master\master_sub_kategori_controller@delete',
+			'as'	=> 'master_sub_kategori.delete'
+		]);
+
+	// route master kategori end
 
 });

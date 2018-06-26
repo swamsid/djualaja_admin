@@ -4,92 +4,105 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
         <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
+            #alpha{
+              width:80%;
+              margin:auto;
+            }
+            ul{
+              padding: 4px 4px;
+              border: 1px solid black;
+              
+            }
+            li{
+              list-style-type:none;
+              padding:4px 4px;
+            }
+            li:hover{
+              background-color:#eee;
+            }
+            li:nth-child(2n){
+              background-color:#ddd;
+            }
+            li:nth-child(2n):hover{
+              background-color:#ccc;
             }
 
-            .full-height {
-                height: 100vh;
+            button{
+              width:100px;
+              height:40px;
+              background-color:#eef;
             }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
+            button:hover{
+              cursor:pointer;
             }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
+            button:hover:disabled{
+              cursor:not-allowed;
             }
         </style>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{{ asset("css/app.css") }}" tppabs="http://www.bootstrapdash.com/demo/purple/css/style.css">
+
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+        <div id="alpha">
+            <paginated-list :list-data="people" :size="size"/> 
         </div>
+        
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <script src="{{ URL::asset('js/app.js') }}"></script>
+        <script src="{{ URL::asset('js/component/vue_datatables.js') }}"></script>
+
+        <script>
+            function createFakeData(){
+              let data = [];
+              for(let i = 0; i < 100; i++){
+                data.push({first: 'John',
+                           last:'Doe', 
+                           suffix:'#' + i});
+              }
+              return data;
+            }
+
+
+            new Vue({
+                el: '#alpha',
+                data:{
+                    people: [],
+                    size: 5
+                }
+            })
+
+        </script>
     </body>
 </html>

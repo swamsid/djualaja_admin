@@ -6,7 +6,7 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an examaaaple dddcomponent.
+                        I'm an examaaaple component.
                     </div>
                 </div>
             </div>
@@ -17,7 +17,7 @@
 <script>
     export default {
         mounted() {
-            console.log('Compaaaonent mounted.')
+            console.log('Component mounted.')
         }
     }
 </script>
