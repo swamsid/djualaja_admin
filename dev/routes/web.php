@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/riset', function () {
+    return view("welcome");
+});
+
 Route::get('/test', function () {
     return view("admin.login.index");
 });

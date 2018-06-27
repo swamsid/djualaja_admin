@@ -426,7 +426,7 @@
         if('{{ $override }}' == "create"){
           this.add();
         }
-        console.log(this.selectedData.length);
+        // console.log(this.selectedData.length);
       },
       created: function(){
         var start_time = new Date().getTime();
