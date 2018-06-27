@@ -5,7 +5,7 @@ Vue.component('data-list-category',{
       search: "",
       row: 10,
       dataTab: [],
-      selected_unit: []
+      selected_unit: [],
     }
   },
   props:{
@@ -44,6 +44,8 @@ Vue.component('data-list-category',{
 
     listData: function(value){
       this.dataTab = value;
+      console.log("List Data Change");
+      // alert(a);
     },
 
     search: function(value){
@@ -135,7 +137,7 @@ Vue.component('data-list-category',{
                         <td>
                           <input type="checkbox" :value="data.id" v-model="selected_unit">
                         </td>
-                        <td v-for="column in columns" :width="column.width">{{ data[column.index] }}</td>
+                        <td v-for="column in columns" :width="column.width" v-html="(column.override == false) ? data[column.index] : column.override(data[column.index])"></td>
                     </tr>
                     
                   </tbody>

@@ -33,7 +33,7 @@ class master_kategori_controller extends Controller
     }
 
     public function save(Request $request){
-    	// return json_encode($request->all());
+    	return json_encode($request->all());
 
     	$id = (DB::table('categories')->max("id") + 1);
 

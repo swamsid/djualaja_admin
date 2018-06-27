@@ -12,7 +12,7 @@
 */
 
 Route::get('/test', function () {
-    return view("welcome");
+    return view("admin.login.index");
 });
 
 route::get("/", function(){
@@ -32,7 +32,7 @@ Route::group(['middleware' => 'guest'], function () {
 		return view("admin.login.index");
 	})->name("login");
 
-	route::post("/login", [
+	route::post("/authenticate", [
 		'uses'	=> 'admin\login\login_controller@authenticate',
 		'as'	=> 'login.authenticate'
 	]);
@@ -133,6 +133,36 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post("/master_sub_kategori/delete", [
 			'uses' 	=> 'admin\data_master\master_sub_kategori_controller@delete',
 			'as'	=> 'master_sub_kategori.delete'
+		]);
+
+	// route master kategori end
+		
+
+	// route master Sub kategori start
+
+		Route::get("/master_features_paid", [
+			'uses' 	=> 'admin\data_master\master_features_paid_controller@index',
+			'as'	=> 'master_features_paid.index'
+		]);
+
+		Route::get("/master_features_paid/list", [
+			'uses'	=> 'admin\data_master\master_features_paid_controller@list',
+			'as'	=> 'master_features_paid.list'
+		]);
+
+		Route::post("/master_features_paid/save", [
+			'uses' 	=> 'admin\data_master\master_features_paid_controller@save',
+			'as'	=> 'master_features_paid.save'
+		]);
+
+		Route::post("/master_features_paid/update", [
+			'uses' 	=> 'admin\data_master\master_features_paid_controller@update',
+			'as'	=> 'master_features_paid.update'
+		]);
+
+		Route::post("/master_features_paid/delete", [
+			'uses' 	=> 'admin\data_master\master_features_paid_controller@delete',
+			'as'	=> 'master_features_paid.delete'
 		]);
 
 	// route master kategori end

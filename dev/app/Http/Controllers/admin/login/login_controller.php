@@ -13,7 +13,6 @@ class login_controller extends Controller
 {
     
 	public function authenticate(Request $request){
-
 		$ret = [
 			"status" => "gagal",
 			"message" => "Kombinasi Username Dan Password Tidak Sesuai"

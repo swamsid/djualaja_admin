@@ -27,6 +27,10 @@
                   <li class="nav-item"> 
                     <a class="nav-link" href="{{ url('/master_sub_kategori') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Sub Kategori</a>
                   </li>
+
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ url('/master_features_paid') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Features Paid</a>
+                  </li>
                 </ul>
               </div>
             </li>

@@ -45,7 +45,7 @@
               {{-- <h3 class="card-title text-left mb-3">Login</h3> --}}
               <form id="login-form">
                 <div class="form-group">
-                  <label>Nomor Induk Karyawan <small style="color: #e2616a; display: none;" id="name_err"> &nbsp;- Tidak Boleh Kosong</small></label>
+                  <label>Nomor User <small style="color: #e2616a; display: none;" id="name_err"> &nbsp;- Tidak Boleh Kosong</small></label>
                   <input type="text" class="input_validate form-control p_input" id="username" data-err="name" name="username">
                 </div>
                 <div class="form-group">
@@ -92,26 +92,44 @@
   <script>
     $(document).ready(function(){
 
-      baseUrl = '{{ url("/") }}';
+      baseUrl = '{{ url("/") }}'; $("#username").focus();
+
+      $("#username").keypress(function(ev){
+        if(ev.which == 13) {
+            $("#login").click();
+        }
+      })
+
+      $("#password").keypress(function(ev){
+        if(ev.which == 13) {
+            $("#login").click();
+        }
+      })
 
       $('#login').click(function(evt){
         evt.stopImmediatePropagation();
         evt.preventDefault();
 
         button = $(this);
-        // button.attr("disabled", "disabled");
+        button.attr("disabled", "disabled");
 
         if(form_auth()){
-          axios.post('login', $("#login-form").serialize())
+          axios.post(baseUrl + '/authenticate', $("#login-form").serialize())
           .then((response) => {
             console.log(response.data);
-            if(response.data.status == "berhasil")
+            if(response.data.status == "berhasil"){
               window.location = "{{ route("dashboard") }}";
-            else
+            }
+            else{
               alert(response.data.message);
+              button.removeAttr("disabled");
+            }
           }).catch((error) => {
             alert(error);
+            button.removeAttr("disabled");
           })
+        }else{
+          button.removeAttr("disabled");
         }
       })
 

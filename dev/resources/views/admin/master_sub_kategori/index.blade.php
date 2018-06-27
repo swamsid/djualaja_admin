@@ -1,6 +1,6 @@
 @extends("admin.app")
 
-@section("title", " Master Kategori")
+@section("title", " Master Sub Kategori")
 
 
 @section("extra_styles")
@@ -204,7 +204,7 @@
           </div>
           <div class="modal-body" style="padding: 15px; background: white;">
             <div class="col-md-12 text-center" v-if="selectedData.length == 0" style="color: #666;">Anda Harus Memilih Data Yang Akan Diedit Terlebih Dahulu.</div>
-            <table id="form-table" border="0" v-if="selectedData.length != 0">
+            <table id="form-table" border="0" v-show="selectedData.length != 0">
               <tr>
                 <td width="25%" class="title"> Data Yang Diedit </td>
                 <td colspan="2">
@@ -272,11 +272,21 @@
 
         dataTable: {
           columns: [
-            { text: "Nomor Kategori", searchable: true, index: "category_id", width:"15%", },
-            { text: "Nama Kategori", searchable: true, index: "name", width:"20%" },
-            { text: "Sub Kategori Dari", searchable: true, index: "parrent_name", width:"10%" },
-            { text: "Dibuat", searchable: true, index: "created_at", width:"10%" },
-            // index harus sama dengan index array data kategori yang digunakan . (apabila searchable false maka nilai index tidak wajib di isi.)
+            { text: "Nomor Kategori", searchable: true, index: "category_id", width:"15%", override: false },
+            { text: "Nama Kategori", searchable: true, index: "name", width:"20%", override: false },
+            { text: "Sub Kategori Dari", searchable: true, index: "parrent_name", width:"10%", override: false },
+            { text: "Dibuat", searchable: true, index: "created_at", width:"10%", override: false },
+            
+            /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 
+            
+                  object :
+                      - text        -> hanya boleh String (text, searchable, index, width, override)
+                      - searchable  -> hanya boleh Boolean true/false
+                      - index       -> hanya boleh String (sesuai object di dalam array data)
+                      - width       -> hanya boleh String (harus satuan ukuran px atau %)
+                      - override    -> hanya boleh function / Boolean false (jika tidak menggunakan function)
+
+            */ // Semua Harus Wajib Diisi.
           ],
 
           data: [],
@@ -498,7 +508,7 @@
                       }
                   },
                   Tidak: function () {
-                      $.alert('Hapus Data Tidak Berhasil.');
+                      $.alert('Hapus Data Dibatalkan.');
                   }
               }
           });

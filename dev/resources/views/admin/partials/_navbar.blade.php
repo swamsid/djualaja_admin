@@ -145,12 +145,12 @@
             <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
               <a class="dropdown-item" href="#">
                 <i class="mdi mdi-cached mr-2 text-success"></i>
-                Activity Log
+                Activity Log &nbsp;<small style="color: #999;">(Hari Ini)</small>
               </a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">
                 <i class="mdi mdi-logout mr-2 text-primary"></i>
-                Signout
+                Keluar
               </a>
             </div>
           </li>
