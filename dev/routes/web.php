@@ -110,7 +110,13 @@ Route::group(['middleware' => 'auth'], function () {
 			'as'	=> 'master_kategori.delete'
 		]);
 
+		Route::post("/master_kategori/get_form_add", [
+			'uses'	=> 'admin\data_master\master_kategori_controller@get_form_add',
+			'as'	=> 'master_kategori.get_form_add'
+		]);
+
 	// route master kategori end
+
 
 	// route master Sub kategori start
 
@@ -142,7 +148,7 @@ Route::group(['middleware' => 'auth'], function () {
 	// route master kategori end
 		
 
-	// route master Sub kategori start
+	// route master features start
 
 		Route::get("/master_features_paid", [
 			'uses' 	=> 'admin\data_master\master_features_paid_controller@index',
@@ -169,6 +175,29 @@ Route::group(['middleware' => 'auth'], function () {
 			'as'	=> 'master_features_paid.delete'
 		]);
 
-	// route master kategori end
+	// route master features end
+
+
+	// route iklan pengguna
+		Route::get("/iklan_pengguna", [
+			'uses' 	=> 'admin\pengelola_iklan\ads_controller@index',
+			'as'	=> 'iklan_pengguna.index'
+		]);
+
+		Route::get("/iklan_pengguna/list", [
+			'uses' 	=> 'admin\pengelola_iklan\ads_controller@list',
+			'as'	=> 'iklan_pengguna.list'
+		]);
+
+		Route::post("/iklan_pengguna/get_iklan", [
+			'uses' 	=> 'admin\pengelola_iklan\ads_controller@get_iklan',
+			'as'	=> 'iklan_pengguna.get_iklan'
+		]);
+
+		Route::post("/iklan_pengguna/update_status", [
+			'uses' 	=> 'admin\pengelola_iklan\ads_controller@update_status',
+			'as'	=> 'iklan_pengguna.update_status'
+		]);
+	//route iklan pengguna end
 
 });

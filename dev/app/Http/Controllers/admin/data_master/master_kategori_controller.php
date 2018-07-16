@@ -16,7 +16,10 @@ class master_kategori_controller extends Controller
     }
 
     public function list(){
-    	$data = DB::table("categories")->select("id", "category_id", "name", "icon", "level", "parrent", "created_by", DB::raw("date(created_at) as created_at"))->where("level", 1)->whereNull("deleted_at")->orderBy("id", "desc")->get();
+    	$data = DB::table("categories")
+                ->leftjoin("categories_add_form", "categories_add_form.id_categories", "=", "categories.id")
+                ->select("categories.id", "category_id", "name", "icon", "level", "parrent", "created_by", DB::raw("date(created_at) as created_at"), DB::raw("count(categories_add_form.id) as count"))
+                ->where("level", 1)->whereNull("deleted_at")->groupBy("categories.id", "category_id", "name", "icon", "level", "parrent", "created_by", "created_at")->orderBy("id", "desc")->get();
 
     	return $data;
     }
@@ -33,15 +36,15 @@ class master_kategori_controller extends Controller
     }
 
     public function save(Request $request){
-    	return json_encode($request->all());
+    	// return json_encode($request->data["name"]);
 
     	$id = (DB::table('categories')->max("id") + 1);
 
     	$data = [
             "id"            => $id,
     		"category_id"	=> 'CT-'.date("ynj/iH").'/'.$id,
-    		"name"			=> ucfirst($request->name),
-    		"icon"			=> $request->icon,
+    		"name"			=> ucfirst($request->data["name"]),
+    		"icon"			=> $request->data["icon"],
     		"level"			=> 1,
     		"parrent"		=> null,
     		"created_by"	=> Auth::user()->employee_id,
@@ -49,9 +52,21 @@ class master_kategori_controller extends Controller
     	];
 
     	if(DB::table("categories")->insert($data)){
+
+            foreach ($request->formAd as $key => $value) {
+
+                $ids = (DB::table('categories_add_form')->where("id_categories", $id)->max("id") + 1);
+
+                DB::table("categories_add_form")->insert([
+                    "id"                => $ids,
+                    "id_categories"     => $id,
+                    "form_name"         => ucfirst($value["nama"])
+                ]);
+            }
+
     		$response = [
 	    		'status' 	=> 'berhasil',
-	    		'content'	=> array_merge($data, ["created_at" => date("Y-m-d")])
+	    		'content'	=> array_merge($data, ["created_at" => date("Y-m-d"), "count" => count($request->formAd)]),
 	    	];
     		return json_encode($response);
     	}
@@ -59,22 +74,44 @@ class master_kategori_controller extends Controller
 
     public function update(Request $request){
     	// return json_encode($request->all());
-    	$id = DB::table("categories")->where("category_id", $request->category_id)->select("id")->first()->id;
+    	$id = DB::table("categories")->where("category_id", $request->data['category_id'])->select("id")->first()->id;
 
     	$data = [
-    		'name'	=> ucfirst($request->name),
-    		'icon'	=> $request->icon
+    		'name'	=> ucfirst($request->data["name"]),
+    		'icon'	=> $request->data['icon']
     	];
 
-    	if(DB::table("categories")->where("id", $id)->update($data)){
+        DB::table("categories")->where("id", $id)->update($data);
+        DB::table('categories_add_form')->where("id_categories", $id)->whereIn('id', $request->deleted)->delete();
 
-    		$response = [
-	    		'status' 	=> 'berhasil',
-	    		'content'	=> $data = DB::table("categories")->where("id", $id)->select("id", "category_id", "name", "icon", "level", "parrent", "created_by", DB::raw("date(created_at) as created_at"))->orderBy("id", "desc")->first()
-	    	];
+        foreach($request->formAd as $key => $value) {
+            if($value["id"] == "null"){
 
-    		return json_encode($response);
-    	}
+                $ids = (DB::table('categories_add_form')->where("id_categories", $id)->max("id") + 1);
+
+                DB::table("categories_add_form")->insert([
+                    "id"                => $ids,
+                    "id_categories"     => $id,
+                    "form_name"         => $value["nama"]
+                ]);
+
+            }else{
+                DB::table("categories_add_form")->where("id_categories", $id)->where("id", $value["id"])->update([
+                    "form_name"         => $value["nama"]
+                ]);
+            }
+        }
+
+		$response = [
+    		'status' 	=> 'berhasil',
+    		'content'	=> DB::table("categories")->where("id", $id)->select("id", "category_id", "name", "icon", "level", "parrent", "created_by", DB::raw("date(created_at) as created_at"))->orderBy("id", "desc")->first(),
+            'category_add_form' => DB::table("categories_add_form")
+                                        ->where("id_categories", $id)
+                                        ->select("id", "form_name as nama")->get()
+    	];
+
+		return json_encode($response);
+
     }
 
     public function delete(Request $request){
@@ -91,6 +128,16 @@ class master_kategori_controller extends Controller
 	    	];
 
     		return json_encode($response);
+    }
+
+    public function get_form_add(Request $request){
+        $data = DB::table("categories_add_form")
+                    ->join("categories", "categories_add_form.id_categories", "=", "categories.id")
+                    ->where("categories.category_id", $request->id)
+                    ->select("categories_add_form.id", "categories_add_form.form_name as nama")->get();
+
+
+        return json_encode($data);
     }
 }
  

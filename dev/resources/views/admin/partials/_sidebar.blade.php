@@ -34,6 +34,21 @@
                 </ul>
               </div>
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#page-layouts2" aria-expanded="false" aria-controls="page-layouts">
+                <span class="menu-title">Pengelola Iklan</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-apps menu-icon"></i>
+              </a>
+              <div class="collapse" id="page-layouts2">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ url('/iklan_pengguna') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Data Iklan Pengguna</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
           </ul>
 
           {{-- <div class="sidebar-progress">
