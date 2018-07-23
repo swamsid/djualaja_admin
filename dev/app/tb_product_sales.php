@@ -28,7 +28,7 @@ class tb_product_sales extends Model
     }
 
     public function user(){
-    	return $this->belongsTo('App\User', 'user_id', 'id');
+    	return $this->belongsTo('App\user', 'user_id', 'id');
     }
 
     public function comment(){

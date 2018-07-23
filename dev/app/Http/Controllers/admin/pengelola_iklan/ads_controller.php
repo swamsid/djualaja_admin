@@ -12,15 +12,22 @@ use Auth;
 
 class ads_controller extends Controller
 {
-    public function index(){
-    	return view("admin.iklan_pengguna.index");
+    public function index($status){
+        if($status == "pending")
+    	   return view("admin.iklan_pengguna.index_pending");
+        else if($status == "approved")
+            return view("admin.iklan_pengguna.index_approved");
     }
 
-    public function list(){
+    public function list(Request $request){
+        // return $request->all();
+    	$data = DB::table("tb_product_sales")
+                        ->join("users", "users.id", "=", "tb_product_sales.user_id")
+                        ->leftjoin("tb_product_photo", "tb_product_photo.product_id", "=", "tb_product_sales.product_id")
+                        ->where("tb_product_sales.product_status", $request->data)
+                        ->select("tb_product_sales.product_id as id", "tb_product_sales.product_name", "tb_product_sales.product_location", "tb_product_sales.product_price", "tb_product_sales.product_created_at", "users.name", "tb_product_sales.product_pre_filter", DB::raw("count(tb_product_photo.photo_id) as photo_count"))
+                        ->groupby("tb_product_sales.product_id", "tb_product_sales.product_name", "tb_product_sales.product_location", "tb_product_sales.product_price", "tb_product_sales.product_created_at", "users.name", "tb_product_sales.product_pre_filter")->get();
 
-    	$data = tb_product_sales::select("tb_product_sales.product_id", "product_name", "product_price", "user_id")->with(["photos" => function($query){
-    		$query->limit(1);
-    	}])->get();
     	return json_encode($data);
 
     }

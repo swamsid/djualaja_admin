@@ -179,17 +179,17 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	// route iklan pengguna
-		Route::get("/iklan_pengguna", [
+		Route::get("/iklan_pengguna/{status}", [
 			'uses' 	=> 'admin\pengelola_iklan\ads_controller@index',
 			'as'	=> 'iklan_pengguna.index'
 		]);
 
-		Route::get("/iklan_pengguna/list", [
+		Route::get("/iklan_pengguna/data/list", [
 			'uses' 	=> 'admin\pengelola_iklan\ads_controller@list',
 			'as'	=> 'iklan_pengguna.list'
 		]);
 
-		Route::post("/iklan_pengguna/get_iklan", [
+		Route::post("/iklan_pengguna/data/get_iklan", [
 			'uses' 	=> 'admin\pengelola_iklan\ads_controller@get_iklan',
 			'as'	=> 'iklan_pengguna.get_iklan'
 		]);

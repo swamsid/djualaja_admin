@@ -44,7 +44,8 @@
               <div class="collapse" id="page-layouts2">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> 
-                    <a class="nav-link" href="{{ url('/iklan_pengguna') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Data Iklan Pengguna</a>
+                    <a class="nav-link" href="{{ url('/iklan_pengguna', 'pending') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Iklan Yang Pending</a>
+                    <a class="nav-link" href="{{ url('/iklan_pengguna', 'approved') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Iklan Yang Disetujui</a>
                   </li>
                 </ul>
               </div>

@@ -125,12 +125,12 @@
         <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body" style="padding: 0px;">
               <ul class="opsi">
-                {{-- <li class="hovered" @click="add"><a href="#"><i class="fa fa-plus"></i> &nbsp;Tambah Data</a></li>
-                <li class="hovered" @click="edit"><a href="#"><i class="fa fa-pencil"></i> &nbsp;Edit Data</a></li>
-                <li class="hovered" @click="hapus"><a href="#"><i class="fa fa-eraser"></i> &nbsp;Hapus Data</a></li> --}}
+                {{-- <li class="hovered" @click="add"><a href="#"><i class="fa fa-plus"></i> &nbsp;Tambah Data</a></li> --}}
+                <li class="hovered" @click="edit"><a href="#"><i class="fa fa-legal"></i> &nbsp;Periksa Iklan Yang Ditandai</a></li>
+                {{-- <li class="hovered" @click="hapus"><a href="#"><i class="fa fa-eraser"></i> &nbsp;Hapus Data</a></li> --}}
 
-                <li class="hovered" style="float: right;"><a href="#news"><i class="fa fa-file-pdf-o"></i> &nbsp;Print Pdf</a></li>
-                <li class="hovered" style="float: right;"><a href="#contact"><i class="fa fa-file-excel-o"></i> &nbsp;Print Excel</a></li>
+                {{-- <li class="hovered" style="float: right;"><a href="#news"><i class="fa fa-file-pdf-o"></i> &nbsp;Print Pdf</a></li> --}}
+                {{-- <li class="hovered" style="float: right;"><a href="#contact"><i class="fa fa-file-excel-o"></i> &nbsp;Print Excel</a></li> --}}
               </ul>
             </div>
         </div>
@@ -170,7 +170,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modal_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-lg" role="document" style="margin-top: 20px;">
         <div class="modal-content" style="border-radius: 1px; font-size: 0.8em;">
           <div class="modal-header" style="padding: 15px;">
             <h5 class="modal-title" id="exampleModalLabel" style="color: #263238;">Informasi @{{ contentHeader }}</h5>
@@ -230,7 +230,7 @@
 
                       <tr>
                         <td>Harga  </td>
-                        <td class="answer">Rp.@{{ dataTable.single_data[0].product_price }},-</td>
+                        <td class="answer">Rp.@{{ humanizePrice(dataTable.single_data[0].product_price) }},-</td>
                       </tr>
 
                       <tr>
@@ -264,12 +264,20 @@
                 <div class="col-md-12" style="padding: 0px;">
                   <table width="100%" border="0">
                     <tr>
+                      <td style="font-weight: 0.9em;" width="30%">Pre-Filtered</td>
+                      <td>
+                        <span title="Iklan Ini Lolos Pengecekan Pertama Oleh Sistem" class="badge badge-info" v-if="dataTable.single_data[0].product_pre_filter == 'passed'">@{{ dataTable.single_data[0].product_pre_filter }}</span>
+                        <span title="Iklan Ini Tidak Lolos Pengecekan Pertama Oleh Sistem" class="badge badge-danger" v-if="dataTable.single_data[0].product_pre_filter == 'fail'">@{{ dataTable.single_data[0].product_pre_filter }}</span>
+                      </td>
+                    </tr>
+
+                    <tr>
                       <td style="font-weight: 0.9em;" width="30%">Status Iklan</td>
                       <td>
                         <select class="form-control" v-model="status_onUpdate">
-                          <option value="1">Pending</option>
-                          <option value="2">Approved</option>
-                          <option value="3">Rejected</option>
+                          <option value="pending">Pending</option>
+                          <option value="approved">Approved</option>
+                          <option value="reject">Rejected</option>
                         </select>
                       </td>
                     </tr>
@@ -296,12 +304,15 @@
       </div>
     </div>
 
+  </div>
+
+
 @endsection
 
 
 @section("extra_scripts")
   
-  <script src="{{ URL::asset('js/component/vue_components_ads.js') }}"></script>
+  <script src="{{ URL::asset('js/component/vue_datatables.js') }}"></script>
 
   <script>
       
@@ -322,21 +333,44 @@
     var app = new Vue({
       el: '#vue-content',
       data: {
-        btn_save_disabled   : false,
+         btn_save_disabled   : false,
         btn_update_disabled : false,
         elapsedTime         : 0,
-        contentHeader       : 'Iklan Pengguna',
+        contentHeader       : 'Iklan Pengguna (Pending)',
         dataSave            : [],
         selectedData        : [],
         changeState         : '',
-        status_onUpdate: 2,
+        status_onUpdate: 'pending',
         message:"",
 
         dataTable: {
 
           columns: [
-            { text: "Nama Iklan", searchable: true, index: "product_name", width:"15%", override: false},
-            { text: "Harga Iklan", searchable: true, index: "product_price", width:"20%", override: false },
+            { text: "Judul Iklan", searchable: true, index: "product_name", width:"27%", override: function(e){
+              return (e.length > 37) ? e.substr(0, 37)+" ..." : e;
+            }},
+            { text: "Pengiklan", searchable: true, index: "name", width: "10%", override: false},
+            { text: "Harga Iklan", searchable: true, index: "product_price", width: "8%", override: function(e){ 
+              var bilangan = e;
+  
+              var number_string = bilangan.toString(),
+                sisa  = number_string.length % 3,
+                rupiah  = number_string.substr(0, sisa),
+                ribuan  = number_string.substr(sisa).match(/\d{3}/g);
+                  
+              if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+              }
+
+              // Cetak hasil
+              return rupiah; // Hasil: 23.456.789
+            }},
+            { text: "Dibuat Tanggal", searchable: true, index: "product_created_at", width: "12%", override: false},
+            { text: "Foto", searchable: true, index: "photo_count", width: "5%", override: false},
+            { text: "Pre-Filter", searchable: true, index: "product_pre_filter", width: "7%", override: function(e){ 
+              return (e == "passed") ? "<span class='badge badge-info'>"+e+"</span>" : "<span class='badge badge-danger'>"+e+"</span>" }
+            },
 
            /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 
             
@@ -358,7 +392,7 @@
       },
       mounted: function(){
         console.log("Vue Ready");
-        // $("#modal_view").modal("show");
+        // $("#modal_tambah").modal("show");
         if('{{ $override }}' == "create"){
           this.add();
         }
@@ -366,16 +400,16 @@
       created: function(){
         var start_time = new Date().getTime();
 
-        axios.get(baseUrl + "/iklan_pengguna/list")
+        axios.get(baseUrl + "/iklan_pengguna/data/list?data=pending")
               .then((response) => {
                 this.dataTable.data = response.data
                 this.elapsedTime = ((new Date().getTime() - start_time) / 1000).toFixed(2).toString().replace('.', ',');
+                // console.log(this.dataTable.data);
               }).catch((error) => {
                 console.log(error)
               })
       },
       watch: {
-
         status_onUpdate: function(value){
           if(value != this.dataTable.single_data[0].product_status){
             $('textarea#explain').removeAttr("disabled");
@@ -384,23 +418,58 @@
           }
 
           this.message = "";
-        }
+        },
 
+        changeState: function(value){
+          if(this.selectedData != 0){
+            
+          }
+
+          // console.log(this.dataTable.single_data);
+        }
       },
 
       computed: {
+        // list_selected: function(){
+        //   var data_selected = []; that = this;
+        //   _.forEach(that.selectedData, function(value){
+        //     data_selected.push(that.dataTable.data[_.findIndex(that.dataTable.data, function(o) { return o.id == value })]);
+        //   })
 
+        //   console.log(data_selected);
+
+        //   return data_selected ;
+        // }
       },
 
       methods: {
+          edit: function(){
+            // console.log(this.changeState);
+            this.dataTable.single_data = [];
+            axios.post(baseUrl + "/iklan_pengguna/data/get_iklan", {id: this.changeState})
+                    .then((response) => {
+                      // console.log(response);
+                      if(response.data.length != 0){
+                        this.dataTable.single_data = response.data;
+                        this.status_onUpdate = response.data[0].product_status;
+                        // alert(response.data[0].product_status);
+                        console.log(this.dataTable.single_data);
+                      }
+                      $("#modal_view").modal("show");
+                    }).catch((err) => {
+                      console.log(err);
+                    })
 
-        update: function(){
-          event.preventDefault();
+          },
+
+         update: function(){
+          // event.preventDefault();
           this.btn_save_disabled = true;
           this.dataSave = this.dataTable.single_data;
 
           if(this.dataTable.single_data[0].product_status != this.status_onUpdate && this.message == ""){
             $.alert("Anda Harus Memberikan Alasan Terlebih Dahulu");
+            this.btn_save_disabled = false;
             return;
           }
 
@@ -411,8 +480,8 @@
               this.btn_save_disabled = false;
               this.dataTable.single_data[0].product_status = response.data.content;
               $.toast({
-                  heading: 'Penambahan Berhasil',
-                  text: 'Data '+this.contentHeader+' Baru Berhasil Ditambahkan.',
+                  heading: 'Perubahan Berhasil',
+                  text: 'Status '+this.contentHeader+' Berhasil Diubah.',
                   position: 'top-right',
                   stack: false
               })
@@ -428,22 +497,32 @@
           })
         },
 
-        selectedUnit: function(a){
-          this.dataTable.single_data = [];
-          this.message = "";
-          axios.post(baseUrl + "/iklan_pengguna/get_iklan", {id: a})
-              .then((response) => {
-                console.log(response.data)
+        humanizePrice: function(alpha){
+          var bilangan = alpha;
+  
+          var number_string = bilangan.toString(),
+            sisa  = number_string.length % 3,
+            rupiah  = number_string.substr(0, sisa),
+            ribuan  = number_string.substr(sisa).match(/\d{3}/g);
+              
+          if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+          }
 
-                this.dataTable.single_data = response.data
-                this.status_onUpdate = response.data[0].product_status;
-
-              }).catch((error) => {
-                console.log(error)
-              })
-
-          $("#modal_view").modal("show");
+          // Cetak hasil
+          return rupiah; // Hasil: 23.456.789
         },
+
+        selectedUnit: function(a){
+          this.selectedData = a;
+          this.changeState = _.first(this.selectedData);
+        },
+
+        getIcon: function(event){
+          event.preventDefault();
+          window.open("https://fontawesome.com/v4.7.0/icons/")
+        }
       }
     })
 

@@ -6,7 +6,7 @@
   @include("admin.partials._head")
 </head>
 
-<body class="sidebar-fixed">
+<body class="sidebar-fixed sidebar-collapse">
   <!-- partial:partials/_settings-panel.html -->
   <div id="settings-trigger"><i class="mdi mdi-settings"></i></div>
 

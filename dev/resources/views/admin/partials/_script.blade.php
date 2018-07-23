@@ -23,4 +23,7 @@
 
 <script>
 	baseUrl = '{{ url("/") }}';
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
 </script>

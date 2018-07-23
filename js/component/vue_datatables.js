@@ -137,7 +137,7 @@ Vue.component('data-list-category',{
                         <td>
                           <input type="checkbox" :value="data.id" v-model="selected_unit">
                         </td>
-                        <td v-for="column in columns" :width="column.width" v-html="(column.override == false) ? data[column.index] : column.override(data[column.index])"></td>
+                        <td :title="data[column.index]" :style="(jQuery.isFunction(column.style)) ? column.style(data[column.index]) : column.style" v-for="column in columns" :width="column.width" v-html="(column.override == false) ? data[column.index] : column.override(data[column.index])"></td>
                     </tr>
                     
                   </tbody>
