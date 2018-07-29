@@ -46,6 +46,7 @@
                   <li class="nav-item"> 
                     <a class="nav-link" href="{{ url('/iklan_pengguna', 'pending') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Iklan Yang Pending</a>
                     <a class="nav-link" href="{{ url('/iklan_pengguna', 'approved') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Iklan Yang Disetujui</a>
+                    <a class="nav-link" href="{{ url('/iklan_pengguna', 'reject') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Iklan Yang Ditolak</a>
                   </li>
                 </ul>
               </div>

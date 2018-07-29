@@ -473,12 +473,19 @@
             return;
           }
 
+          that = this;
           axios.post(baseUrl + '/iklan_pengguna/update_status', {id: this.dataTable.single_data[0].product_id, status: this.status_onUpdate, message: this.message})
           .then((response) => {
             console.log(response.data);
             if(response.data.status == "berhasil"){
               this.btn_save_disabled = false;
-              this.dataTable.single_data[0].product_status = response.data.content;
+              // alert(response.data.content);
+              if(response.data.content != "pending"){
+                var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == that.dataTable.single_data[0].product_id })
+                this.dataTable.data.splice(idx, 1);
+                this.dataTable.single_data = [];
+              }
+
               $.toast({
                   heading: 'Perubahan Berhasil',
                   text: 'Status '+this.contentHeader+' Berhasil Diubah.',

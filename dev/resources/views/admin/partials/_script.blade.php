@@ -23,6 +23,8 @@
 
 <script>
 	baseUrl = '{{ url("/") }}';
+	Pof = 'https://djualaja.com';
+
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
 	})

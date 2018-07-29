@@ -17,6 +17,8 @@ class ads_controller extends Controller
     	   return view("admin.iklan_pengguna.index_pending");
         else if($status == "approved")
             return view("admin.iklan_pengguna.index_approved");
+        else if($status == "reject")
+            return view("admin.iklan_pengguna.index_rejected");
     }
 
     public function list(Request $request){

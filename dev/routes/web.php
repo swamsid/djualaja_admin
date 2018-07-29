@@ -70,9 +70,19 @@ Route::group(['middleware' => 'auth'], function () {
 			'as'	=> 'master_user.index'
 		]);
 
-		// Route::get("/master-user/test/create", [
-		// 	'uses' 	=> 'admin\data_master\master_user_controller@test_create',
-		// 	'as'	=> 'master_user.test_create'
+		Route::get("/master_user/list", [
+			'uses' 	=> 'admin\data_master\master_user_controller@list',
+			'as'	=> 'master_user.list'
+		]);
+
+		Route::post("/master_user/update", [
+			'uses' 	=> 'admin\data_master\master_user_controller@update',
+			'as'	=> 'master_user.update'
+		]);
+
+		// Route::post("/iklan_pengguna/update_status", [
+		// 	'uses' 	=> 'admin\pengelola_iklan\ads_controller@update_status',
+		// 	'as'	=> 'iklan_pengguna.update_status'
 		// ]);
 
 	// route master user end
