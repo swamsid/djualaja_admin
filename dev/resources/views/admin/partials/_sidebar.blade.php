@@ -31,6 +31,12 @@
                   <li class="nav-item"> 
                     <a class="nav-link" href="{{ url('/master_features_paid') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Features Paid</a>
                   </li>
+
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ url('/pop_up') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Pop Up</a>
+                  </li>
+
+
                 </ul>
               </div>
             </li>

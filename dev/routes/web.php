@@ -210,4 +210,27 @@ Route::group(['middleware' => 'auth'], function () {
 		]);
 	//route iklan pengguna end
 
+
+	// route popup
+		Route::get("/pop_up/", [
+			'uses' 	=> 'admin\data_master\popup_controller@index',
+			'as'	=> 'popup.index'
+		]);
+
+		Route::get("/iklan_pengguna/data/list", [
+			'uses' 	=> 'admin\pengelola_iklan\ads_controller@list',
+			'as'	=> 'iklan_pengguna.list'
+		]);
+
+		Route::post("/iklan_pengguna/data/get_iklan", [
+			'uses' 	=> 'admin\pengelola_iklan\ads_controller@get_iklan',
+			'as'	=> 'iklan_pengguna.get_iklan'
+		]);
+
+		Route::post("/pop_up/save", [
+			'uses' 	=> 'admin\data_master\popup_controller@save',
+			'as'	=> 'popup.save'
+		]);
+	//route popup end
+
 });
