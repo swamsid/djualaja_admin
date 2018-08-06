@@ -43,6 +43,8 @@
   </div>
   <!-- container-scroller -->
 
+  @include('admin.partials._modal')
+
   <!-- plugins:js -->
   
   @include("admin.partials._script")

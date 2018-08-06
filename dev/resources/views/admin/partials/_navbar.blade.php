@@ -8,7 +8,7 @@
           <span class="mdi mdi-menu"></span>
         </button>
         <div class="search-field ml-4 d-none d-md-block">
-          <form class="d-flex align-items-stretch h-100" action="#">
+          {{-- <form class="d-flex align-items-stretch h-100" action="#">
             <div class="input-group">
               <input type="text" class="form-control bg-transparent border-0" placeholder="Search">
               <div class="input-group-btn">
@@ -29,19 +29,19 @@
                 </button>
               </div>
             </div>
-          </form>
+          </form> --}}
         </div>
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item d-none d-lg-block full-screen-link">
-            <a class="nav-link">
+            {{-- <a class="nav-link">
               <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
-            </a>
+            </a> --}}
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+            {{-- <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <i class="mdi mdi-email-outline"></i>
               <span class="count"></span>
-            </a>
+            </a> --}}
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
               <h6 class="p-3 mb-0">Messages</h6>
               <div class="dropdown-divider"></div>
@@ -85,10 +85,10 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+            {{-- <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="mdi mdi-bell-outline"></i>
               <span class="count"></span>
-            </a>
+            </a> --}}
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
               <h6 class="p-3 mb-0">Notifications</h6>
               <div class="dropdown-divider"></div>

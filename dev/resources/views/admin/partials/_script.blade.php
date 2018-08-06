@@ -18,6 +18,8 @@
 <script src="{{ asset('js/todolist.js') }}" tppabs="http://www.bootstrapdash.com/demo/purple/js/todolist.js"></script>
 <script src="{{ asset('js/plugins/jquery-toast-plugin-master/dist/jquery.toast.min.js') }}"></script>
 <script src="{{ asset('js/plugins/jquery-confirm-master/dist/jquery-confirm.min.js') }}"></script>
+<script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+
 {{-- <script src="{{ asset('js/lodash.js') }}"></script> --}}
 <!-- endinject -->
 
@@ -26,6 +28,22 @@
 	Pof = 'https://djualaja.com';
 
 	$(function () {
-	  $('[data-toggle="tooltip"]').tooltip()
+	  $('[data-toggle="tooltip"]').tooltip();
+
+	  $('.open_additional_modal').click(function(evt){
+	  	evt.preventDefault();
+	  	$("#modal_additional").modal('show');
+	  	$('#modal_additional .modal-title').text($(this).data('title'));
+        $('#modal_additional .modal-body').html("<center><small class='text-muted'>Menyiapkan Form Setting..</small></center>")
+
+	  	axios.get(baseUrl + $(this).data('url'))
+              .then((response) => {
+              	console.log(response);
+                $('#modal_additional .modal-body').html(response.data)
+              }).catch((error) => {
+                console.log(error)
+              })
+	  })
 	})
+
 </script>

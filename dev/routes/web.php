@@ -57,9 +57,9 @@ Route::group(['middleware' => 'auth'], function () {
 		'as'	=> 'logout'
 	]);
 
-	Route::get('/dashboard', function () {
-	    return view('admin.dashboard.index');
-	})->name("dashboard");
+	Route::get('/dashboard',[
+		'uses'	=> 'admin\dashboard_controller@index',
+	])->name("dashboard");
 
 
 
@@ -217,20 +217,108 @@ Route::group(['middleware' => 'auth'], function () {
 			'as'	=> 'popup.index'
 		]);
 
-		Route::get("/iklan_pengguna/data/list", [
-			'uses' 	=> 'admin\pengelola_iklan\ads_controller@list',
-			'as'	=> 'iklan_pengguna.list'
+		Route::get("/pop_up/data/list", [
+			'uses' 	=> 'admin\data_master\popup_controller@list',
+			'as'	=> 'popup.list'
 		]);
 
-		Route::post("/iklan_pengguna/data/get_iklan", [
-			'uses' 	=> 'admin\pengelola_iklan\ads_controller@get_iklan',
-			'as'	=> 'iklan_pengguna.get_iklan'
+		Route::post("/pop_up/data/get_iklan", [
+			'uses' 	=> 'admin\data_master\popup_controller@get_iklan',
+			'as'	=> 'popup.get_iklan'
 		]);
 
 		Route::post("/pop_up/save", [
 			'uses' 	=> 'admin\data_master\popup_controller@save',
 			'as'	=> 'popup.save'
 		]);
+
+		Route::post("/pop_up/update", [
+			'uses' 	=> 'admin\data_master\popup_controller@update',
+			'as'	=> 'popup.update'
+		]);
+
+		Route::post("/pop_up/delete", [
+			'uses' 	=> 'admin\data_master\popup_controller@delete',
+			'as'	=> 'popup.delete'
+		]);
 	//route popup end
+
+	// route voucher
+		Route::get("/voucher/", [
+			'uses' 	=> 'admin\data_master\voucher_controller@index',
+			'as'	=> 'voucher.index'
+		]);
+
+		Route::get("/voucher/data/list", [
+			'uses' 	=> 'admin\data_master\voucher_controller@list',
+			'as'	=> 'voucher.list'
+		]);
+
+		Route::post("/voucher/save", [
+			'uses' 	=> 'admin\data_master\voucher_controller@save',
+			'as'	=> 'voucher.save'
+		]);
+
+		Route::post("/voucher/update", [
+			'uses' 	=> 'admin\data_master\voucher_controller@update',
+			'as'	=> 'voucher.update'
+		]);
+
+		Route::post("/voucher/delete", [
+			'uses' 	=> 'admin\data_master\voucher_controller@delete',
+			'as'	=> 'voucher.delete'
+		]);
+	//route voucher
+
+	// route filter
+		Route::get("/filter", [
+			'uses' 	=> 'admin\data_master\filter_controller@index',
+			'as'	=> 'filter.index'
+		]);
+
+		Route::get("/filter/data/list", [
+			'uses' 	=> 'admin\data_master\filter_controller@list',
+			'as'	=> 'filter.list'
+		]);
+
+		Route::post("/filter/save", [
+			'uses' 	=> 'admin\data_master\filter_controller@save',
+			'as'	=> 'filter.save'
+		]);
+
+		Route::post("/filter/update", [
+			'uses' 	=> 'admin\data_master\filter_controller@update',
+			'as'	=> 'filter.update'
+		]);
+
+		Route::post("/filter/delete", [
+			'uses' 	=> 'admin\data_master\filter_controller@delete',
+			'as'	=> 'filter.delete'
+		]);
+	//route filter
+
+	// route laporan pengiklan
+		Route::get("/laporan/laporan_pengiklan/setting", [
+			'uses' 	=> 'admin\laporan\laporan_pengiklan_controller@setting',
+			'as'	=> 'laporan_pengiklan.setting'
+		]);
+
+		Route::post("/laporan/laporan_pengiklan/submit", [
+			'uses' 	=> 'admin\laporan\laporan_pengiklan_controller@submit',
+			'as'	=> 'laporan_pengiklan.submit'
+		]);
+	//laporan pengiklan end
+
+	// route laporan iklan
+		Route::get("/laporan/laporan_iklan/setting", [
+			'uses' 	=> 'admin\laporan\laporan_iklan_controller@setting',
+			'as'	=> 'laporan_iklan.setting'
+		]);
+
+		Route::post("/laporan/laporan_iklan/submit", [
+			'uses' 	=> 'admin\laporan\laporan_iklan_controller@submit',
+			'as'	=> 'laporan_iklan.submit'
+		]);
+	//laporan iklan end
 
 });

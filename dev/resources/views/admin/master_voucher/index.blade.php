@@ -155,7 +155,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modal_tambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document" style="margin-top: 10px;">
+      <div class="modal-dialog" role="document" style="margin-top: 10px;">
         <div class="modal-content" style="border-radius: 1px; font-size: 0.8em;">
           <div class="modal-header" style="padding: 15px;">
             <h5 class="modal-title" id="exampleModalLabel" style="color: #263238;">Tambah Data @{{ contentHeader }}</h5>
@@ -165,91 +165,117 @@
           </div>
           <div class="modal-body" style="padding: 15px; background: white;">
             <div class="row">
-              <div class="col-md-6" style="border-right: 1px solid #eee;">
+              <div class="col-md-12" style="border-right: 1px solid #eee;">
                 <table id="form-table" border="0">
 
                   <tr>
-                    <td width="30%" class="title"> Type Pop Up </td>
-                    <td width="65%">
-                        <select id="jenis_popup" class="form-control" v-model="dataTable.single_data.type_popup">
-                          <option value="text">Text</option>
-                          <option value="image">Image</option>
-                        </select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title"> Untuk Halaman </td>
-                    <td width="65%">
-                        <select id="jenis_popup" class="form-control" v-model="dataTable.single_data.halaman">
-                          <option value="home">Home</option>
-                          <option value="list_iklan">List Iklan</option>
-                        </select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title"> Berlaku Hingga </td>
-                    <td width="65%">
-                        <input type="text" class="form-control datePick" placeholder="Pilih Tanggal" style="cursor: pointer;" readonly v-model="dataTable.single_data.berlaku_sampai">
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title"> Judul Popup </td>
-                    <td width="65%">
-                        <input type="text" class="form-control" placeholder="Masukkan Nama PopUp" v-model="dataTable.single_data.judul_popup">
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title" style="vertical-align: top; padding-top: 15px"> Kontent Popup </td>
-                    <td width="65%">
-                        <textarea class="form-control" cols="5" rows="5" placeholder="Masukkan Content PopPup" v-model="dataTable.single_data.content_popup">
-                          
-                        </textarea>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title"> Url Link </td>
+                    <td width="30%" class="title"> Kode Voucher </td>
                     <td width="65%">
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">http://</span>
+                          <input type="text" class="form-control" placeholder="Masukkan Kode Voucher" v-model="dataTable.single_data.voucher_code" maxlength="9">
+
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" style="font-size: 0.9em;" @click="randomMe(9)">Acak Kode</button>
                           </div>
-                          <input type="text" class="form-control" placeholder="Masukkan Url Link" v-model="dataTable.single_data.link_redirect">
                         </div>
                     </td>
                     <td></td>
                     <td></td>
                   </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Deskripsi Voucher </td>
+                    <td width="65%">
+                        <textarea class="form-control" rows="5" placeholder="Masukkan Placeholder" maxlength="300" v-model="dataTable.single_data.voucher_description"></textarea>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Maksimal Digunakan </td>
+                    <td width="65%">
+                        <div class="input-group">
+                          <input type="number" min="0" class="form-control" placeholder="Berapa Kali Voucher Ini Bisa Digunakan" v-model="dataTable.single_data.voucher_uses">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">Kali</span>
+                          </div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Penggunaan 1 User </td>
+                    <td width="65%">
+                        <div class="input-group">
+                          <input type="number" min="0" class="form-control" placeholder="Maksimal Penggunaan 1 User" v-model="dataTable.single_data.voucher_max_users_uses">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">Kali</span>
+                          </div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Type Voucher </td>
+                    <td width="65%">
+                        <select class="form-control" v-model="dataTable.single_data.voucher_type" @change="diskonChange()">
+                          <option value="1">Diskon Dalam Persen</option>
+                          <option value="2">Diskon Dalam Nilai</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Jumlah Diskon </td>
+                    <td width="65%">
+                        <div class="input-group" v-if="stateDiskon == 1">
+                          <input type="number" min="0" max="100" class="form-control" placeholder="Jumlah Diskon Yang Diberikan" v-model="dataTable.single_data.voucher_discount">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">%</span>
+                          </div>
+                        </div>
+
+                        <div class="input-group" v-if="stateDiskon == 2">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">Rp.</span>
+                          </div>
+                          <input type="number" min="0" class="form-control" placeholder="Jumlah Diskon Yang Diberikan" v-model="dataTable.single_data.voucher_discount">
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Berlaku Sampai </td>
+                    <td width="65%">
+                        <input type="text" class="form-control datePick" placeholder="Pilih Tanggal" style="cursor: pointer;" readonly v-model="dataTable.single_data.voucher_ends_at">
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Is Fixed </td>
+                    <td width="65%">
+                        <select class="form-control" v-model="dataTable.single_data.is_fixed">
+                          <option value="1">Ya</option>
+                          <option value="0">Tidak</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
                 </table>
               </div>
-
-              <div class="col-md-6">
-                <div class="col-md-12 text-center text-muted">
-                  <small>Jika Jenis Pop Up Text, Maka Gambar Tidak Wajib Diisi.</small>
-                </div>
-
-                <div class="col-md-12" style="padding: 0px; margin-top: 10px;">
-                  <div style="width: 28em; height: 18em; margin: 0 auto;">
-                      <img id="image" src="{{asset('images/ad-default.png')}}" alt="Picture" />
-                  </div>
-                  <input type="file" id="uploader" style="margin-top: 20px;" />
-                </div>
-              </div>
-
             </div>
           </div>
           <div class="modal-footer">
@@ -261,7 +287,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document" style="margin-top: 10px;">
+      <div class="modal-dialog" role="document" style="margin-top: 10px;">
         <div class="modal-content" style="border-radius: 1px; font-size: 0.8em;">
           <div class="modal-header" style="padding: 15px;">
             <h5 class="modal-title" id="exampleModalLabel" style="color: #263238;">Edit Data @{{ contentHeader }}</h5>
@@ -273,24 +299,14 @@
             <div class="col-md-12 text-center" v-if="selectedData.length == 0" style="color: #666;">Anda Harus Memilih Data Yang Akan Diedit Terlebih Dahulu.</div>
 
             <div class="row" v-show="selectedData.length != 0">
-              <div class="col-md-6" style="border-right: 1px solid #eee;">
+              <div class="col-md-12" style="border-right: 1px solid #eee;">
                 <table id="form-table" border="0">
 
                   <tr>
-                    <td width="25%" class="title"> Data Yang Diedit </td>
-                    <td colspan="2">
+                    <td width="30%" class="title"> Kode Voucher </td>
+                    <td width="65%">
                         <select class="form-control" style="width: 70%" v-model="changeState">
-                          <option v-for="dat in list_selected" :value="dat.id">@{{ dat.judul_popup }}</option>
-                        </select>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title"> Type Pop Up </td>
-                    <td width="65%">
-                        <select id="jenis_popup" class="form-control" v-model="dataTable.single_data.type_popup">
-                          <option value="text">Text</option>
-                          <option value="image">Image</option>
+                          <option v-for="dat in list_selected" :value="dat.id">@{{ dat.voucher_code }}</option>
                         </select>
                     </td>
                     <td></td>
@@ -298,75 +314,98 @@
                   </tr>
 
                   <tr>
-                    <td width="30%" class="title"> Untuk Halaman </td>
+                    <td width="30%" class="title"> Deskripsi Voucher </td>
                     <td width="65%">
-                        <select id="jenis_popup" class="form-control" v-model="dataTable.single_data.halaman">
-                          <option value="home">Home</option>
-                          <option value="list_iklan">List Iklan</option>
-                        </select>
+                        <textarea class="form-control" rows="5" placeholder="Masukkan Placeholder" maxlength="300" v-model="dataTable.single_data.voucher_description"></textarea>
                     </td>
                     <td></td>
                     <td></td>
                   </tr>
 
                   <tr>
-                    <td width="30%" class="title"> Berlaku Hingga </td>
-                    <td width="65%">
-                        <input type="text" class="form-control datePick" placeholder="Pilih Tanggal" style="cursor: pointer;" readonly v-model="dataTable.single_data.berlaku_sampai">
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title"> Judul Popup </td>
-                    <td width="65%">
-                        <input type="text" class="form-control" placeholder="Masukkan Nama PopUp" v-model="dataTable.single_data.judul_popup">
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title" style="vertical-align: top; padding-top: 15px"> Kontent Popup </td>
-                    <td width="65%">
-                        <textarea class="form-control" cols="5" rows="5" placeholder="Masukkan Content PopPup" v-model="dataTable.single_data.content_popup">
-                          
-                        </textarea>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="30%" class="title"> Url Link </td>
+                    <td width="30%" class="title"> Maksimal Digunakan </td>
                     <td width="65%">
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">http://</span>
+                          <input type="number" min="0" class="form-control" placeholder="Berapa Kali Voucher Ini Bisa Digunakan" v-model="dataTable.single_data.voucher_uses">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">Kali</span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Masukkan Url Link" v-model="dataTable.single_data.link_redirect">
                         </div>
                     </td>
                     <td></td>
                     <td></td>
                   </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Penggunaan 1 User </td>
+                    <td width="65%">
+                        <div class="input-group">
+                          <input type="number" min="0" class="form-control" placeholder="Maksimal Penggunaan 1 User" v-model="dataTable.single_data.voucher_max_users_uses">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">Kali</span>
+                          </div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Type Voucher </td>
+                    <td width="65%">
+                        <select class="form-control" v-model="dataTable.single_data.voucher_type" @change="diskonChange()">
+                          <option value="1">Diskon Dalam Persen</option>
+                          <option value="2">Diskon Dalam Nilai</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Jumlah Diskon </td>
+                    <td width="65%">
+                        <div class="input-group" v-if="stateDiskon == 1">
+                          <input type="number" min="0" max="100" class="form-control" placeholder="Jumlah Diskon Yang Diberikan" v-model="dataTable.single_data.voucher_discount">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">%</span>
+                          </div>
+                        </div>
+
+                        <div class="input-group" v-if="stateDiskon == 2">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3" style="font-size: 0.9em;">Rp.</span>
+                          </div>
+                          <input type="number" min="0" class="form-control" placeholder="Jumlah Diskon Yang Diberikan" v-model="dataTable.single_data.voucher_discount">
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Berlaku Sampai </td>
+                    <td width="65%">
+                        <input type="text" class="form-control datePick" placeholder="Pilih Tanggal" style="cursor: pointer;" readonly v-model="dataTable.single_data.voucher_ends_at">
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr>
+                    <td width="30%" class="title"> Is Fixed </td>
+                    <td width="65%">
+                        <select class="form-control" v-model="dataTable.single_data.is_fixed">
+                          <option value="1">Ya</option>
+                          <option value="0">Tidak</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
                 </table>
               </div>
-
-              <div class="col-md-6">
-                <div class="col-md-12 text-center text-muted">
-                  <small>Jika Jenis Pop Up Text, Maka Gambar Tidak Wajib Diisi.</small>
-                </div>
-
-                <div class="col-md-12" style="padding: 0px; margin-top: 10px;">
-                  <div style="width: 28em; height: 18em; margin: 0 auto;">
-                      <img id="image_edit" src="{{asset('images/ad-default.png')}}" alt="Picture" />
-                  </div>
-                  <input type="file" id="uploader_edit" style="margin-top: 20px;" />
-                </div>
-              </div>
-
             </div>
           </div>
 
@@ -395,118 +434,10 @@
       $('.datePick').datepicker( {
           format: "yyyy-mm-dd",
       }).on("changeDate", function(){
-        app.dataTable.single_data.berlaku_sampai = $(this).val();
+        app.dataTable.single_data.voucher_ends_at = $(this).val();
       });
 
       $('.datePick').datepicker("setStartDate", '{{ date('Y-m-d') }}');
-
-      $image = $("#image").cropper({
-            viewMode: 3,
-            dragMode: 'move',
-            autoCropArea: 1,
-            restore: false,
-            modal: true,
-            guides: true,
-            highlight: false,
-            cropBoxMovable: false,
-            cropBoxResizable: false,
-            toggleDragModeOnDblclick: false,
-        });
-
-      $("#uploader").change(function() {
-            var $image = $("#image");
-            var $inputImage = $(this);
-            if (window.FileReader) {
-                $("#infoo").text("Mengupload...");
-                var fileReader = new FileReader(),
-                    files = this.files,
-                    file;
-                if (!files.length) {
-                    return;
-                }
-                file = files[0];
-                if (/^image\/\w+$/.test(file.type)) {
-                    fileReader.readAsDataURL(file);
-                    fileReader.onload = function() {
-                        var size = file.size / 1024;
-                        if (Math.round(size) > 800) {
-                            $.dialog({
-                                title: 'Upload Gagal',
-                                content: 'Ukuran Gambar Tidak Boleh Melebihi 800 kb.',
-                            });
-                            $("#status_upload").css("display", "none");
-                            $(".btn_image").attr("disabled", false);
-                            $inputImage.val("");
-                            return;
-                        }
-                        $image.cropper("reset", true).cropper("replace", this.result);
-                    };
-                } else {
-                    $.dialog({
-                        title: 'Upload Gagal',
-                        content: 'File Yang Akan Anda Upload Bukan Termasuk Gambar (Jpg/Png).',
-                    });
-                    $inputImage.val("");
-                }
-            } else {
-                return;
-                //$inputImage.addClass("hide");
-            }
-        });
-
-        $image_edit = $("#image_edit").cropper({
-            viewMode: 3,
-            dragMode: 'move',
-            autoCropArea: 1,
-            restore: false,
-            modal: true,
-            guides: true,
-            highlight: false,
-            cropBoxMovable: false,
-            cropBoxResizable: false,
-            toggleDragModeOnDblclick: false,
-        });
-
-      $("#uploader_edit").change(function() {
-            var $image = $("#image_edit");
-            var $inputImage = $(this);
-            if (window.FileReader) {
-                $("#infoo").text("Mengupload...");
-                var fileReader = new FileReader(),
-                    files = this.files,
-                    file;
-                if (!files.length) {
-                    return;
-                }
-                file = files[0];
-                if (/^image\/\w+$/.test(file.type)) {
-                    fileReader.readAsDataURL(file);
-                    fileReader.onload = function() {
-                        var size = file.size / 1024;
-                        if (Math.round(size) > 800) {
-                            $.dialog({
-                                title: 'Upload Gagal',
-                                content: 'Ukuran Gambar Tidak Boleh Melebihi 800 kb.',
-                            });
-                            $("#status_upload").css("display", "none");
-                            $(".btn_image").attr("disabled", false);
-                            $inputImage.val("");
-                            return;
-                        }
-                        $image.cropper("reset", true).cropper("replace", this.result);
-                    };
-                } else {
-                    $.dialog({
-                        title: 'Upload Gagal',
-                        content: 'File Yang Akan Anda Upload Bukan Termasuk Gambar (Jpg/Png).',
-                    });
-                    $inputImage.val("");
-                }
-            } else {
-                return;
-                //$inputImage.addClass("hide");
-            }
-        });
     })
 
     var app = new Vue({
@@ -515,19 +446,26 @@
         btn_save_disabled   : false,
         btn_update_disabled : false,
         elapsedTime         : 0,
-        contentHeader       : 'Pop Up',
+        contentHeader       : 'Voucher',
         dataSave            : [],
         selectedData        : [],
-        categoryParrent    	: [],
         changeState         : '',
+        stateDiskon         : '1',
 
         dataTable: {
           columns: [
-            { text: "Judul Popup", searchable: true, index: "judul_popup", width:"10%", override: false },
-            { text: "konten Popup", searchable: true, index: "content_popup", width:"20%", override: false },
-            { text: "Halaman", searchable: true, index: "halaman", width:"10%", override: false },
-            { text: "Berlaku Sampai", searchable: true, index: "berlaku_sampai", width:"20%", override: false },
-            { text: "Type Popup", searchable: true, index: "type_popup", width:"10%", override: false },
+            { text: "Kode Voucher", searchable: true, index: "voucher_code", width:"12%", override: false },
+            { text: "Maksimal", searchable: true, index: "voucher_uses", width:"12%", override: function(e){
+              return e+' <small>Kali</small>';
+            } },
+            { text: "Jumlah Diskon", searchable: true, index: "voucher_discount", width:"10%", override: false },
+            { text: "Type Voucher", searchable: true, index: "voucher_type", width:"10%", override: function(e){
+              if(e == 1)
+                return '<span class="badge badge-primary">Diskon Dalam Persen</span>';
+              else
+                return '<span class="badge badge-info">Diskon Dalam Rupiah</span>';
+            } },
+            { text: "Berlaku Sampai", searchable: true, index: "voucher_ends_at", width:"10%", override: false },
             
             /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 
             
@@ -544,12 +482,14 @@
           data: [],
 
           single_data: {
-          	type_popup:  'text',
-            halaman:     'home',
-            judul_popup:  '',
-            content_popup: '',
-            berlaku_sampai: '',
-            link_redirect: '',
+          	voucher_code            : '',
+            voucher_description     : '',
+            voucher_uses            : '',
+            voucher_max_users_uses  : '',
+            voucher_type            : '1',
+            voucher_discount        : '',
+            voucher_ends_at         : '',
+            is_fixed                : '1',
           },
 
           size: 10,
@@ -563,7 +503,7 @@
       created: function(){
         var start_time = new Date().getTime();
 
-        axios.get(baseUrl+"/pop_up/data/list")
+        axios.get(baseUrl+"/voucher/data/list")
               .then((response) => {
               	// console.log(response.data)
                 this.dataTable.data = response.data;
@@ -577,14 +517,15 @@
           if(this.selectedData != 0){
 	          var state = this.changeState;
 	          var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == state });
-            this.dataTable.single_data.id = this.dataTable.data[idx].id;
-            this.dataTable.single_data.type_popup = this.dataTable.data[idx].type_popup;
-            this.dataTable.single_data.halaman = this.dataTable.data[idx].halaman;
-            this.dataTable.single_data.berlaku_sampai = this.dataTable.data[idx].berlaku_sampai;
-            this.dataTable.single_data.judul_popup = this.dataTable.data[idx].judul_popup;
-            this.dataTable.single_data.content_popup = this.dataTable.data[idx].content_popup;
-            this.dataTable.single_data.link_redirect = this.dataTable.data[idx].link_redirect;
-            $image_edit.cropper("reset", true).cropper("replace", '{{ url('/') }}/images/popup/pop_up_'+this.dataTable.data[idx].id+".png");
+            this.dataTable.single_data.voucher_code = this.dataTable.data[idx].voucher_code;
+            this.dataTable.single_data.voucher_description = this.dataTable.data[idx].voucher_description;
+            this.dataTable.single_data.voucher_uses = this.dataTable.data[idx].voucher_uses;
+            this.dataTable.single_data.voucher_max_users_uses = this.dataTable.data[idx].voucher_max_users_uses;
+            this.dataTable.single_data.voucher_type = this.dataTable.data[idx].voucher_type;
+            this.dataTable.single_data.voucher_discount = this.dataTable.data[idx].voucher_discount;
+            this.dataTable.single_data.voucher_ends_at = this.dataTable.data[idx].voucher_ends_at;
+            this.dataTable.single_data.is_fixed = this.dataTable.data[idx].is_fixed;
+            this.stateDiskon = this.dataTable.single_data.voucher_type;
           }
 
           // console.log("change State");
@@ -598,7 +539,7 @@
             data_selected.push(that.dataTable.data[_.findIndex(that.dataTable.data, function(o) { return o.id == value })]);
           })
 
-          console.log(data_selected);
+          // console.log(data_selected);
           return data_selected ;
         }
       },
@@ -606,14 +547,14 @@
       methods: {
         add: function(event){
           event.preventDefault();
-          this.dataTable.single_data.type_popup = "text";
-          this.dataTable.single_data.halaman = "home";
-          this.dataTable.single_data.berlaku_sampai = "";
-          this.dataTable.single_data.judul_popup = "";
-          this.dataTable.single_data.content_popup = "";
-          this.dataTable.single_data.link_redirect = "";
-          $image.cropper("reset", true).cropper("replace", '{{asset('images/ad-default.png')}}');
-          $('#uploader').val('');
+          this.dataTable.single_data.voucher_code = '';
+          this.dataTable.single_data.voucher_description = '';
+          this.dataTable.single_data.voucher_uses = '';
+          this.dataTable.single_data.voucher_max_users_uses = '';
+          this.dataTable.single_data.voucher_type = '1';
+          this.dataTable.single_data.voucher_discount = '';
+          this.dataTable.single_data.voucher_ends_at = '';
+          this.dataTable.single_data.is_fixed = '1';
 
           $("#modal_tambah").modal("show");
         },
@@ -621,17 +562,20 @@
         edit: function(event){
           event.preventDefault();
 
+          console.log(this.dataTable.data);
+
           if(this.selectedData != 0){
 	          var state = this.changeState;
 	          var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == state });
-            this.dataTable.single_data.id = this.dataTable.data[idx].id;
-            this.dataTable.single_data.type_popup = this.dataTable.data[idx].type_popup;
-            this.dataTable.single_data.halaman = this.dataTable.data[idx].halaman;
-            this.dataTable.single_data.berlaku_sampai = this.dataTable.data[idx].berlaku_sampai;
-            this.dataTable.single_data.judul_popup = this.dataTable.data[idx].judul_popup;
-            this.dataTable.single_data.content_popup = this.dataTable.data[idx].content_popup;
-            this.dataTable.single_data.link_redirect = this.dataTable.data[idx].link_redirect;
-            $image_edit.cropper("reset", true).cropper("replace", '{{ url('/') }}/images/popup/pop_up_'+this.dataTable.data[idx].id+".png");
+            this.dataTable.single_data.voucher_code = this.dataTable.data[idx].voucher_code;
+            this.dataTable.single_data.voucher_description = this.dataTable.data[idx].voucher_description;
+            this.dataTable.single_data.voucher_uses = this.dataTable.data[idx].voucher_uses;
+            this.dataTable.single_data.voucher_max_users_uses = this.dataTable.data[idx].voucher_max_users_uses;
+            this.dataTable.single_data.voucher_type = this.dataTable.data[idx].voucher_type;
+            this.dataTable.single_data.voucher_discount = this.dataTable.data[idx].voucher_discount;
+            this.dataTable.single_data.voucher_ends_at = this.dataTable.data[idx].voucher_ends_at;
+            this.dataTable.single_data.is_fixed = this.dataTable.data[idx].is_fixed;
+            this.stateDiskon = this.dataTable.single_data.voucher_type;
           }
 
           $("#modal_edit").modal("show");
@@ -640,23 +584,27 @@
         addSave: function(event){
           event.preventDefault();
           this.btn_save_disabled = true;
+          this.dataTable.single_data.voucher_uses = ''+this.dataTable.single_data.voucher_uses;
+          this.dataTable.single_data.voucher_max_users_uses = ''+this.dataTable.single_data.voucher_max_users_uses;
+          this.dataTable.single_data.voucher_type = ''+this.dataTable.single_data.voucher_type;
+          this.dataTable.single_data.voucher_discount = ''+this.dataTable.single_data.voucher_discount;
+          this.dataTable.single_data.is_fixed = ''+this.dataTable.single_data.is_fixed;
           this.dataSave = this.dataTable.single_data;
 
-          if(_.some(this.dataTable.single_data, _.isEmpty)){
+          if(this.dataTable.single_data.voucher_max_users_uses == '' || this.dataTable.single_data.voucher_uses == '' || this.dataTable.single_data.voucher_discount == ''){
+            $.alert("Tampaknya Ada Yang Salah Dengan Inputan Anda. Pastikan Inputan Dalam Bentuk Angka Harus Anda Isi Dengan Isian Angka.");
+            this.btn_save_disabled = false; return;
+          }else if(parseInt(this.dataTable.single_data.voucher_max_users_uses) > parseInt(this.dataTable.single_data.voucher_uses)){
+            $.alert("Nilai Penggunaan 1 User Tidak Boleh lebih Besar Dari Nilai Maksimal Digunakan.");
+            this.btn_save_disabled = false; return;
+          }else if(_.some(this.dataTable.single_data, _.isEmpty)){
             $.alert("Tidak Boleh Ada Data Yang Kosong");
             this.btn_save_disabled = false; return;
           }
 
-          // else if(this.dataTable.single_data.type_popup == 'image' && $('#uploader').val() == ""){
-          //   $.alert("Popup Type Image Wajib Memiliki Gambar..");
-          //   this.btn_save_disabled = false; return;
-          // }
-
-          var cropResult = $image.cropper('getCroppedCanvas').toDataURL("image/png");
-
-          axios.post(baseUrl + '/pop_up/save', {data: this.dataSave, imgPath: cropResult })
+          axios.post(baseUrl + '/voucher/save', this.dataSave )
           .then((response) => {
-            // console.log(response.data);
+            console.log(response.data);
             if(response.data.status == "berhasil"){
               this.btn_save_disabled = false;
               this.dataTable.data.unshift(response.data.content);
@@ -669,7 +617,7 @@
             }else if(response.data.status == "exist"){
               $.toast({
                   heading: 'Perubahan Gagal',
-                  text: 'Halaman '+response.data.content.halaman+' Sedang Memiliki PopUp Yang Masih Aktif, Sehingga Data Yang Anda Simpan Tidak Berhasil Kami Simpan..',
+                  text: 'Voucher Dengan Kode '+response.data.content+' Sudah Ada Di Database, Data Ini Tidak Bisa Kami Simpan..',
                   icon: 'error',
                   position: 'top-right',
                   hideAfter: false,
@@ -681,13 +629,14 @@
           }).catch((error) => {
             alert(error);
           }).then((data) => {
-            // this.dataTable.single_data.type_popup = "text";
-            // this.dataTable.single_data.halaman = "home";
-            // this.dataTable.single_data.berlaku_sampai = "";
-            // this.dataTable.single_data.judul_popup = "";
-            // this.dataTable.single_data.content_popup = "";
-            // this.dataTable.single_data.link_redirect = "";
-            // $("#uploader").val('');
+            this.dataTable.single_data.voucher_code = '';
+            this.dataTable.single_data.voucher_description = '';
+            this.dataTable.single_data.voucher_uses = '';
+            this.dataTable.single_data.voucher_max_users_uses = '';
+            this.dataTable.single_data.voucher_type = '1';
+            this.dataTable.single_data.voucher_discount = '';
+            this.dataTable.single_data.voucher_ends_at = '';
+            this.dataTable.single_data.is_fixed = '1';
           })
 
         },
@@ -695,28 +644,38 @@
         editSave: function(event){
           // event.preventDefault();
           this.btn_update_disabled = true;
-          this.dataSave = this.dataTable.single_data;
-          this.dataTable.single_data.id = ''+this.dataTable.single_data.id; 
+         this.dataTable.single_data.voucher_uses = ''+this.dataTable.single_data.voucher_uses;
+         this.dataTable.single_data.voucher_max_users_uses = ''+this.dataTable.single_data.voucher_max_users_uses;
+         this.dataTable.single_data.voucher_type = ''+this.dataTable.single_data.voucher_type;
+         this.dataTable.single_data.voucher_discount = ''+this.dataTable.single_data.voucher_discount;
+         this.dataTable.single_data.is_fixed = ''+this.dataTable.single_data.is_fixed;
+         this.dataSave = this.dataTable.single_data;
 
-          console.log('a');
-
-          if(_.some(this.dataTable.single_data, _.isEmpty)){
-            alert("Tidak Boleh Ada Data Yang Kosong");
-            this.btn_update_disabled = false; return;
+          if(this.dataTable.single_data.voucher_max_users_uses == '' || this.dataTable.single_data.voucher_uses == '' || this.dataTable.single_data.voucher_discount == ''){
+            $.alert("Tampaknya Ada Yang Salah Dengan Inputan Anda. Pastikan Inputan Dalam Bentuk Angka Harus Anda Isi Dengan Isian Angka.");
+            this.btn_save_disabled = false; return;
+          }else if(parseInt(this.dataTable.single_data.voucher_max_users_uses) > parseInt(this.dataTable.single_data.voucher_uses)){
+            $.alert("Nilai Penggunaan 1 User Tidak Boleh lebih Besar Dari Nilai Maksimal Digunakan.");
+            this.btn_save_disabled = false; return;
+          }else if(_.some(this.dataTable.single_data, _.isEmpty)){
+            $.alert("Tidak Boleh Ada Data Yang Kosong");
+            this.btn_save_disabled = false; return;
           }
 
-          axios.post(baseUrl + '/pop_up/update', {data: this.dataSave, imgPath: $image_edit.cropper('getCroppedCanvas').toDataURL("image/png") })
+          axios.post(baseUrl + '/voucher/update', {data: this.dataSave, id: this.changeState})
           .then((response) => {
-            // console.log(response.data);
+            console.log(response.data);
             if(response.data.status == "berhasil"){
               this.btn_update_disabled = false;
               var idx = this.dataTable.data.findIndex(u => u.id == response.data.content.id);
-              this.dataTable.data[idx].judul_popup = response.data.content.judul_popup;
-              this.dataTable.data[idx].content_popup = response.data.content.content_popup;
-              this.dataTable.data[idx].halaman = response.data.content.halaman;
-              this.dataTable.data[idx].berlaku_sampai = response.data.content.berlaku_sampai;
-              this.dataTable.data[idx].type_popup = response.data.content.type_popup;
-              this.dataTable.data[idx].link_redirect = response.data.content.link_redirect;
+              this.dataTable.data[idx].voucher_code = response.data.content.voucher_code;
+              this.dataTable.data[idx].voucher_description = response.data.content.voucher_description;
+              this.dataTable.data[idx].voucher_uses = response.data.content.voucher_uses;
+              this.dataTable.data[idx].voucher_max_users_uses = response.data.content.voucher_max_users_uses;
+              this.dataTable.data[idx].voucher_type = response.data.content.voucher_type;
+              this.dataTable.data[idx].voucher_discount = response.data.content.voucher_discount;
+              this.dataTable.data[idx].voucher_ends_at = response.data.content.voucher_ends_at;
+              this.dataTable.data[idx].is_fixed = response.data.content.is_fixed;
 
               $.toast({
                   heading: 'Perubahan Berhasil',
@@ -724,19 +683,10 @@
                   position: 'top-right',
                   stack: false
               })
-            }else if(response.data.status == "exist"){
-              $.toast({
-                  heading: 'Perubahan Gagal',
-                  text: 'Halaman '+response.data.content.halaman+' Sedang Memiliki PopUp Yang Masih Aktif, Sehingga Data Yang Anda Update Tidak Berhasil Kami Lakukan..',
-                  icon: 'error',
-                  position: 'top-right',
-                  hideAfter: false,
-                  stack: false
-              })
             }else if(response.data.status == "invalid"){
               $.toast({
                   heading: 'Perubahan Gagal',
-                  text: 'Data PopUp Yang Ingin Anda Edit Tidak Bisa Kami Temukan. Cobalah Untuk Memuat Ulang Halaman..',
+                  text: 'Data Voucher Yang Ingin Anda Edit Tidak Bisa Kami Temukan. Cobalah Untuk Memuat Ulang Halaman..',
                   icon: 'error',
                   position: 'top-right',
                   hideAfter: false,
@@ -763,14 +713,14 @@
           that = this; dta = that.selectedData.length;
 
           $.confirm({
-              title: 'Hapus PopUp?',
+              title: 'Hapus Voucher?',
               content: dta + ' Data '+this.contentHeader+' Akan Dihapus, Apakah Anda Yakin ?.',
               autoClose: 'Tidak|5000',
               buttons: {
                   deleteUser: {
                       text: 'Ya',
                       action: function () {
-                          axios.post(baseUrl + '/pop_up/delete', that.selectedData)
+                          axios.post(baseUrl + '/voucher/delete', that.selectedData)
                             .then((response) => {
                               console.log(response.data);
                               if(response.data.status == "berhasil"){
@@ -801,6 +751,20 @@
               }
           });
 
+        },
+
+        diskonChange: function(){
+          this.stateDiskon = this.dataTable.single_data.voucher_type;
+          this.dataTable.single_data.voucher_discount = '';
+        },
+
+        randomMe: function(length){
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            for(var i = 0; i < length; i++) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            this.dataTable.single_data.voucher_code = text.toUpperCase();
         },
 
         selectedUnit: function(a){

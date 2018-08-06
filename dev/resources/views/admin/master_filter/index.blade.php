@@ -160,7 +160,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modal_tambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius: 1px; font-size: 0.8em;">
           <div class="modal-header" style="padding: 15px;">
             <h5 class="modal-title" id="exampleModalLabel" style="color: #263238;">Tambah Data @{{ contentHeader }}</h5>
@@ -171,71 +171,17 @@
 
           <div class="modal-body" style="padding: 15px; background: white;">
             <div class="row">
-
-              <div class="col-md-7" style="border-right: 1px solid #eee;">
-                <div class="col-md-12" style="padding: 10px 10px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-top: 0px;">
-                    Form Keterangan Kategori
-                </div>
-
+              <div class="col-md-12" style="border-right: 1px solid #eee;">
                 <table id="form-table" border="0">
                   <tr>
-                    <td width="30%" class="title"> Perkiraan Nomor </td>
+                    <td width="30%" class="title"> Kalimat Filter </td>
                     <td colspan="2">
-                        <input type="text" class="form-control" placeholder="Perkiraan Nomor" readonly style="width: 70%" v-model="dataTable.single_data.category_id">
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td width="25%" class="title"> Nama Kategori </td>
-                    <td width="60%">
-                        <input type="text" class="form-control" id="kategori_name" placeholder="Input Category Name" style="width: 100%" v-model="dataTable.single_data.name">
-                    </td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="25%" class="title"> Ikon Kategori </td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-secondary" type="button" style="font-size:0.9em; padding: 5px 10px 5px 15px;" @click="getIcon">
-                            <i class="fa fa-search"></i> fa-
-                          </button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Input dataTable.single_data Icon" style="height: 2.8em" v-model="dataTable.single_data.icon">
-                      </div>
-                    </td>
-                    <td>
-                      <i :class="'fa fa-'+dataTable.single_data.icon"></i>
+                        <input type="text" class="form-control" placeholder="Masukkan Kalimat Yang Di Filter" v-model="dataTable.single_data.kalimat">
                     </td>
                   </tr>
                 </table>
               </div>
-
-              <div class="col-md-5">
-                <div class="col-md-12" style="padding: 10px 10px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-top: 0px;">
-                    Inputan Tambahan
-                    <i class="fa fa-plus pull-right text-success" style="margin-top: 4px; cursor: pointer;" @click="create_addForm"></i>
-                </div>
-                
-                <div class="col-md-12" style="margin-top: 10px; padding: 5px 13px;">
-                  <div class="col-md-12" v-if="dataTable.dataAddForm.length == 0">
-                    <center><small class="text-muted"><i class="fa fa-frown-o"></i> &nbsp;Tidak Bisa Menemukan Inputan Tambahan Apapun..</small></center>
-                  </div>
-                  <div class="row" v-for="(formAdd, idx) in dataTable.dataAddForm">
-                    <div class="col-md-10">
-                      <input type="text" class="form-control" :placeholder="'Masukkan Nama Inputan ke '+(idx+1)" v-model="formAdd.nama" style="margin-bottom: 5px;">
-                    </div>
-
-                    <div class="col-md-1" style="padding-top: 7px;">
-                      <i class="fa fa-eraser text-danger" style="cursor: pointer;" @click="delete_addForm(idx)"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
-
           </div>
 
           <div class="modal-footer">
@@ -247,7 +193,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius: 1px; font-size: 0.8em;">
           <div class="modal-header" style="padding: 15px;">
             <h5 class="modal-title" id="exampleModalLabel" style="color: #263238;">Edit Data @{{ contentHeader }}</h5>
@@ -259,78 +205,24 @@
             <div class="col-md-12 text-center" v-if="selectedData.length == 0" style="color: #666;">Anda Harus Memilih Data Yang Akan Diedit Terlebih Dahulu.</div>
             
             <div class="row" v-show="selectedData.length != 0">
-
-              <div class="col-md-7" style="border-right: 1px solid #eee;">
-                <div class="col-md-12" style="padding: 10px 10px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-top: 0px;">
-                    Form Keterangan Kategori
-                </div>
-
                 <table id="form-table" border="0">
+
                   <tr>
-                    <td width="30%" class="title"> Data Yang Diedit </td>
+                    <td width="30%" class="title" style="padding-left: 30px;"> ID </td>
                     <td colspan="2">
                         <select class="form-control" style="width: 70%" v-model="changeState">
-                          <option v-for="dat in list_selected" :value="dat.id">@{{ dat.name }}</option>
+                          <option v-for="dat in list_selected" :value="dat.id">@{{ dat.id }}</option>
                         </select>
                     </td>
                   </tr>
 
                   <tr>
-                    <td width="25%" class="title"> Perkiraan Nomor </td>
+                    <td width="30%" class="title" style="padding-left: 30px;"> Kalimat Filter </td>
                     <td colspan="2">
-                        <input type="text" class="form-control" placeholder="Perkiraan Nomor" readonly style="width: 70%" v-model="dataTable.single_data.category_id">
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td width="25%" class="title"> Nama Kategori </td>
-                    <td width="60%">
-                        <input type="text" class="form-control" id="kategori_name" placeholder="Input Category Name" style="width: 100%" v-model="dataTable.single_data.name">
-                    </td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td width="25%" class="title"> Ikon Kategori </td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-secondary" type="button" style="font-size:0.9em; padding: 5px 10px 5px 15px;" @click="getIcon">
-                            <i class="fa fa-search"></i> fa-
-                          </button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Input Category Icon" style="height: 2.8em" v-model="dataTable.single_data.icon">
-                      </div>
-                    </td>
-                    <td>
-                      <i :class="'fa fa-'+dataTable.single_data.icon"></i>
+                        <input type="text" class="form-control" placeholder="Masukkan Kalimat Yang Di Filter" v-model="dataTable.single_data.kalimat">
                     </td>
                   </tr>
                 </table>
-              </div>
-
-              <div class="col-md-5">
-                <div class="col-md-12" style="padding: 10px 10px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-top: 0px;">
-                    Inputan Tambahan
-                    <i class="fa fa-plus pull-right text-success" style="margin-top: 4px; cursor: pointer;" @click="create_addForm"></i>
-                </div>
-
-                <div class="col-md-12" style="margin-top: 10px; padding: 5px 13px;">
-                  <div class="col-md-12" v-if="dataTable.dataAddForm.length == 0">
-                    <center><small class="text-muted"><i class="fa fa-frown-o"></i> &nbsp;Tidak Bisa Menemukan Inputan Tambahan Apapun..</small></center>
-                  </div>
-                  <div class="row" v-for="(formAdd, idx) in dataTable.dataAddForm">
-                    <div class="col-md-10">
-                      <input type="text" class="form-control" :placeholder="'Masukkan Nama Inputan ke '+(idx+1)" v-model="formAdd.nama" style="margin-bottom: 5px;">
-                    </div>
-
-                    <div class="col-md-1" style="padding-top: 7px;">
-                      <i class="fa fa-eraser text-danger" style="cursor: pointer;" @click="delete_addForm(idx)"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
           <div class="modal-footer">
@@ -371,17 +263,15 @@
         btn_save_disabled   : false,
         btn_update_disabled : false,
         elapsedTime         : 0,
-        contentHeader       : 'Kategori',
+        contentHeader       : 'Filter',
         dataSave            : [],
         selectedData        : [],
         changeState          : '',
 
         dataTable: {
           columns: [
-            { text: "Nomor Kategori", searchable: true, index: "category_id", width:"15%", override: false},
-            { text: "Nama Kategori", searchable: true, index: "name", width:"20%", override: false },
-            { text: "Ikon Kategori", searchable: true, index: "icon", width:"10%", override: function(e){ return '<i class="fa fa-'+e+'"></i>' } },
-            { text: "Form Tambahan", searchable: true, index: "count", width:"10%", override: function(e){ return e+" <small>Form</small>" } },
+            { text: "Kalimat Yang Di Filter", searchable: true, index: "kalimat", width:"15%", override: false},
+            { text: "Dibuat Tanggal", searchable: true, index: "created_at", width:"20%", override: false },
 
            /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 
             
@@ -399,13 +289,8 @@
           data: [],
 
           single_data: {
-            category_id: '',
-            name: '',
-            icon: '',
+            kalimat: '',
           },
-
-          dataAddForm: [],
-          deletedElementChild: [],
 
           size: 10,
         }
@@ -421,7 +306,7 @@
       created: function(){
         var start_time = new Date().getTime();
 
-        axios.get(baseUrl + "/master_kategori/list")
+        axios.get(baseUrl + "/filter/data/list")
               .then((response) => {
                 this.dataTable.data = response.data
                 this.elapsedTime = ((new Date().getTime() - start_time) / 1000).toFixed(2).toString().replace('.', ',');
@@ -433,20 +318,7 @@
         changeState: function(value){
           if(this.selectedData != 0){
             var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == value });
-            this.dataTable.single_data.category_id = this.dataTable.data[idx].category_id;
-            this.dataTable.single_data.name = this.dataTable.data[idx].name;
-            this.dataTable.single_data.icon = this.dataTable.data[idx].icon;
-            this.dataTable.dataAddForm = [];
-
-            axios.post(baseUrl + "/master_kategori/get_form_add", {id: this.dataTable.data[idx].category_id})
-              .then((response) => {
-                // console.log(response.data)
-
-                this.dataTable.dataAddForm = response.data
-
-              }).catch((error) => {
-                console.log(error)
-              })
+            this.dataTable.single_data.kalimat = this.dataTable.data[idx].kalimat;
           }
 
           // console.log(this.dataTable.single_data);
@@ -466,11 +338,7 @@
 
       methods: {
         add: function(){
-          this.dataTable.single_data.category_id = (this.dataTable.data.length !== 0) ? 'CT-{{ date("ynj/iH") }}/' + (parseInt(_.first(this.dataTable.data).category_id.split('/')[2]) + 1) : 'CT-{{ date("ynj/iH") }}/1';
-          this.dataTable.single_data.name= "";
-          this.dataTable.single_data.icon= "";
-          this.dataTable.dataAddForm = [];
-
+          this.dataTable.single_data.kalimat= "";
           $("#modal_tambah").modal("show");
         },
 
@@ -480,20 +348,7 @@
           if(this.selectedData != 0){
             var state = this.changeState;
             var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == state });
-            this.dataTable.single_data.category_id = this.dataTable.data[idx].category_id;
-            this.dataTable.single_data.name = this.dataTable.data[idx].name;
-            this.dataTable.single_data.icon = this.dataTable.data[idx].icon;
-            this.dataTable.dataAddForm = [];
-
-            axios.post(baseUrl + "/master_kategori/get_form_add", {id: this.dataTable.data[idx].category_id})
-              .then((response) => {
-                // console.log(response.data)
-
-                this.dataTable.dataAddForm = response.data
-
-              }).catch((error) => {
-                console.log(error)
-              })
+            this.dataTable.single_data.kalimat = this.dataTable.data[idx].kalimat;
           }
 
           $("#modal_edit").modal("show");
@@ -509,21 +364,7 @@
             this.btn_save_disabled = false; return;
           }
 
-          var state = true;
-
-          _.forEach(this.dataTable.dataAddForm, function(value){
-            if(value.nama == ""){
-              state = false;
-              return
-            }
-          })
-
-          if(!state){
-            $.alert("Nama Inputan Tambahan Tidak Boleh Ada Yang Kosong");
-            this.btn_save_disabled = false; return;
-          }
-
-          axios.post(baseUrl + '/master_kategori/save', {data: this.dataSave, formAd: this.dataTable.dataAddForm})
+          axios.post(baseUrl + '/filter/save', this.dataSave)
           .then((response) => {
             console.log(response.data);
             if(response.data.status == "berhasil"){
@@ -560,59 +401,37 @@
             this.btn_update_disabled = false; return;
           }
 
-          var state = true;
-
-          _.forEach(this.dataTable.dataAddForm, function(value){
-            if(value.nama == ""){
-              state = false;
-              return
-            }
-          })
-
-          if(!state){
-            $.alert("Nama Inputan Tambahan Tidak Boleh Ada Yang Kosong");
-            this.btn_save_disabled = false; return;
-          }
-
-          that = this;
-
-          $.confirm({
-              title: 'Pesan Sistem',
-              content: 'Jika Anda Mengganti/Menghapus Inputan Tambahan Di Kategori Ini, Mungkin Akan Menyebabkan Jawaban Yang Telah Diberikan Oleh Pengguna Terhadap Inputan Tersebut Tidak Relevan. Jika Anda Memilih Lanjutkan, Maka Kami Harap Anda Paham Dengan Segala Kemungkinan Yang Akan Terjadi.',
-              buttons: {
-                  deleteUser: {
-                      text: 'Lanjutkan',
-                      action: function () {
-                          axios.post(baseUrl + '/master_kategori/update', {data: that.dataSave, formAd: that.dataTable.dataAddForm, deleted: that.dataTable.deletedElementChild})
-                                .then((response) => {
-                                  console.log(response.data);
-                                  if(response.data.status == "berhasil"){
-                                    that.btn_update_disabled = false;
-                                    that.dataTable.data[_.findIndex(that.dataTable.data, function(o) { return o.id == response.data.content.id; })].name = response.data.content.name;
-                                    that.dataTable.data[_.findIndex(that.dataTable.data, function(o) { return o.id == response.data.content.id; })].icon = response.data.content.icon;
-                                    that.dataTable.dataAddForm = response.data.category_add_form
-                                    $.toast({
-                                        heading: 'Perubahan Berhasil',
-                                        text: 'Data '+that.contentHeader+' Berhasil Diubah.',
-                                        position: 'top-right',
-                                        stack: false
-                                    })
-                                  }
-                                  else{
-                                    console.log("localServer Error;")
-                                  }
-                                }).catch((error) => {
-                                  alert(error);
-                                }).then((data) => {
-                                  that.dataTable.deletedElementChild = [];
-                                })
-                      }
-                  },
-                  Tidak: function () {
-                      $.alert('Kategori Tidak Jadi Diupdate.');
-                  }
-              }
-          });
+          axios.post(baseUrl + '/filter/update', {data: this.dataSave, id: this.changeState})
+              .then((response) => {
+                // console.log(response.data);
+                if(response.data.status == "berhasil"){
+                  that.btn_update_disabled = false;
+                  var idx = this.dataTable.data.findIndex(u => u.id == response.data.content.id);
+                  this.dataTable.data[idx].kalimat = response.data.content.kalimat;
+                  $.toast({
+                      heading: 'Perubahan Berhasil',
+                      text: 'Data '+that.contentHeader+' Berhasil Diubah.',
+                      position: 'top-right',
+                      stack: false
+                  })
+                }else if(response.data.status == "invalid"){
+                  that.btn_update_disabled = false;
+                  $.toast({
+                      heading: 'Perubahan Gagal',
+                      text: 'Data Filter Yang Ingin Anda Edit Tidak Bisa Kami Temukan. Cobalah Untuk Memuat Ulang Halaman..',
+                      icon: 'error',
+                      position: 'top-right',
+                      hideAfter: false,
+                      stack: false
+                  })
+                }else{
+                  console.log("localServer Error;")
+                }
+              }).catch((error) => {
+                alert(error);
+              }).then((data) => {
+                that.dataTable.deletedElementChild = [];
+              })
 
         },
 
@@ -629,14 +448,14 @@
           that = this; dta = that.selectedData.length;
 
           $.confirm({
-              title: 'Hapus Kategori?',
+              title: 'Hapus Data Filter?',
               content: dta + ' Data '+this.contentHeader+' Akan Dihapus, Apakah Anda Yakin ?.',
               autoClose: 'Tidak|5000',
               buttons: {
                   deleteUser: {
                       text: 'Ya',
                       action: function () {
-                          axios.post(baseUrl + '/master_kategori/delete', that.selectedData)
+                          axios.post(baseUrl + '/filter/delete', that.selectedData)
                             .then((response) => {
                               // console.log(response.data);
                               if(response.data.status == "berhasil"){

@@ -22,5 +22,7 @@
   <link rel="shortcut icon" href="{{ asset('images/favicon_d.png') }}" />
   <link rel="stylesheet" href="{{ asset('js/plugins/jquery-toast-plugin-master/dist/jquery.toast.min.css') }}">
   <link rel="stylesheet" href="{{ asset('js/plugins/jquery-confirm-master/dist/jquery-confirm.min.css') }}">
+  
+  <link href="{{asset('js/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
 
   @yield("extra_styles")
