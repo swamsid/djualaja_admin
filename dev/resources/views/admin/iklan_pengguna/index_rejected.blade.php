@@ -277,7 +277,7 @@
                         <select class="form-control" v-model="status_onUpdate">
                           <option value="pending">Pending</option>
                           <option value="approved">Approved</option>
-                          <option value="reject">Rejected</option>
+                          <option value="blocked">blocked</option>
                         </select>
                       </td>
                     </tr>
@@ -340,7 +340,7 @@
         dataSave            : [],
         selectedData        : [],
         changeState         : '',
-        status_onUpdate: 'reject',
+        status_onUpdate: 'blocked',
         message:"",
 
         dataTable: {
@@ -400,7 +400,7 @@
       created: function(){
         var start_time = new Date().getTime();
 
-        axios.get(baseUrl + "/iklan_pengguna/data/list?data=reject")
+        axios.get(baseUrl + "/iklan_pengguna/data/list?data=blocked")
               .then((response) => {
                 this.dataTable.data = response.data
                 this.elapsedTime = ((new Date().getTime() - start_time) / 1000).toFixed(2).toString().replace('.', ',');

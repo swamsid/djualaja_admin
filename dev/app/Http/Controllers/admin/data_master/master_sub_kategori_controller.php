@@ -35,6 +35,16 @@ class master_sub_kategori_controller extends Controller
     	// return json_encode($request->all());
 
     	$id = (DB::table('categories')->max("id") + 1);
+
+        $cek = DB::table('categories')->where('level', 2)->where('name', 'like', '%'.$request->name.'%')->first();
+
+        if($cek){
+            return json_encode([
+                'status'    => 'exist_name',
+                'content'   => $request->name
+            ]);
+        }
+
     	$parrent = DB::table("categories")->where("category_id", $request->parrent)->select("id", "name", "category_id", "deleted_at")->first();
 
     	if(!is_null($parrent->deleted_at)){
@@ -73,6 +83,15 @@ class master_sub_kategori_controller extends Controller
 
     public function update(Request $request){
     	// return json_encode($request->all());
+
+        $cek = DB::table('categories')->where('level', 2)->where('name', 'like', '%'.$request->name.'%')->first();
+
+        if($cek){
+            return json_encode([
+                'status'    => 'exist_name',
+                'content'   => $request->name
+            ]);
+        }
 
     	$myData = DB::table("categories")->where("category_id", $request->category_id)->select("id", "deleted_at")->first();
     	$id = DB::table("categories")->where("category_id", $request->category_id)->select("id")->first()->id;

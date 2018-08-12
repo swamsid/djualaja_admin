@@ -40,6 +40,15 @@ class master_kategori_controller extends Controller
 
     	$id = (DB::table('categories')->max("id") + 1);
 
+        $cek = DB::table('categories')->where('level', 1)->where('name', 'like', '%'.$request->data['name'].'%')->first();
+
+        if($cek){
+            return json_encode([
+                'status'    => 'exist_name',
+                'content'   => $request->data['name']
+            ]);
+        }
+
     	$data = [
             "id"            => $id,
     		"category_id"	=> 'CT-'.date("ynj/iH").'/'.$id,
@@ -75,6 +84,15 @@ class master_kategori_controller extends Controller
     public function update(Request $request){
     	// return json_encode($request->all());
     	$id = DB::table("categories")->where("category_id", $request->data['category_id'])->select("id")->first()->id;
+
+        $cek = DB::table('categories')->where('level', 1)->where('name', 'like', '%'.$request->data['name'].'%')->first();
+
+        if($cek){
+            return json_encode([
+                'status'    => 'exist_name',
+                'content'   => $request->data['name']
+            ]);
+        }
 
     	$data = [
     		'name'	=> ucfirst($request->data["name"]),

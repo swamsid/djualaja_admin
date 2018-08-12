@@ -391,6 +391,14 @@
                   position: 'top-right',
                   stack: false
               })
+            }else if(response.data.status == 'exist_name'){
+              that.btn_update_disabled = false;
+              $.toast({
+                  heading: 'Penambahan gagal',
+                  text: 'Sudah Ada Sub kategori Dengan Nama '+response.data.content+'. Data Tidak Bisa Kami Simpan.',
+                  position: 'top-right',
+                  stack: false
+              })
             }else if(response.data.status == "invalid parrent"){
             	$.toast({
 				    heading: 'Penambahan Gagal',
@@ -406,7 +414,7 @@
           }).catch((error) => {
             alert(error);
           }).then((data) => {
-            this.dataTable.single_data.name = ""; this.dataTable.single_data.parrent = "";
+            this.dataTable.single_data.name = ""; this.dataTable.single_data.parrent = this.categoryParrent[0].parrent;
           })
 
         },
@@ -433,6 +441,14 @@
               $.toast({
                   heading: 'Perubahan Berhasil',
                   text: 'Data '+this.contentHeader+' Berhasil Diubah.',
+                  position: 'top-right',
+                  stack: false
+              })
+            }else if(response.data.status == 'exist_name'){
+              that.btn_update_disabled = false;
+              $.toast({
+                  heading: 'Penambahan gagal',
+                  text: 'Sudah Ada Sub kategori Dengan Nama '+response.data.content+'. Data Tidak Bisa Kami Simpan.',
                   position: 'top-right',
                   stack: false
               })

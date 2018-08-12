@@ -1,6 +1,6 @@
 @extends("admin.app")
 
-@section("title", " Master Kategori")
+@section("title", " Laporan Iklan Dari Pengguna")
 
 
 @section("extra_styles")
@@ -193,8 +193,8 @@
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
 
-                          <div v-for="(picture, idx) in dataTable.single_data[0].photos" :class="(idx == 0) ? 'carousel-item active' : 'carousel-item'">
-                            <img width="100%" class="img-responsive" :src="picture.property_of+'/images/users/upload/'+dataTable.single_data[0].user_id+'/products/'+dataTable.single_data[0].product_id+'/'+picture.photo_name" :alt="'First slide'">
+                          <div v-for="(picture, idx) in dataTable.single_data[0].iklan.photos" :class="(idx == 0) ? 'text-center carousel-item active' : 'text-center carousel-item'">
+                            <img style="height: 250px; object-fit: contain; margin: 0 auto;" :src="picture.property_of+'/images/users/upload/'+dataTable.single_data[0].user_id+'/products/'+dataTable.single_data[0].iklan.product_id+'/'+picture.photo_name" :alt="'First slide'">
                           </div>
 
                         </div>
@@ -215,32 +215,32 @@
 
                       <tr>
                         <td width="35%">Nama  </td>
-                        <td class="answer">@{{ dataTable.single_data[0].product_name }}</td>
+                        <td class="answer">@{{ dataTable.single_data[0].iklan.product_name }}</td>
                       </tr>
 
                       <tr>
                         <td>Kondisi  </td>
-                        <td class="answer">@{{ dataTable.single_data[0].product_condition }}</td>
+                        <td class="answer">@{{ dataTable.single_data[0].iklan.product_condition }}</td>
                       </tr>
 
                       <tr>
                         <td>Nego  </td>
-                        <td class="answer" v-html="(dataTable.single_data[0].product_nego) ? 'Ya' : 'Tidak'"></td>
+                        <td class="answer" v-html="(dataTable.single_data[0].iklan.product_nego) ? 'Ya' : 'Tidak'"></td>
                       </tr>
 
                       <tr>
                         <td>Harga  </td>
-                        <td class="answer">Rp.@{{ humanizePrice(dataTable.single_data[0].product_price) }},-</td>
+                        <td class="answer">Rp.@{{ humanizePrice(dataTable.single_data[0].iklan.product_price) }},-</td>
                       </tr>
 
                       <tr>
                         <td>Alamat  </td>
-                        <td class="answer">@{{ dataTable.single_data[0].product_location }}</td>
+                        <td class="answer">@{{ dataTable.single_data[0].iklan.product_location }}</td>
                       </tr>
 
                       <tr>
                         <td>Kota  </td>
-                        <td class="answer">@{{ dataTable.single_data[0].district.regency.name }}</td>
+                        <td class="answer">@{{ dataTable.single_data[0].iklan.district.regency.name }}</td>
                       </tr>
 
 
@@ -254,7 +254,7 @@
                     Deskripsi Iklan
                   </div>
 
-                  <div class="col-md-12" style="background: none; padding: 10px 15px; border-bottom: 1px solid #ccc; margin-top: 0px; font-size: 0.9em;" v-html="dataTable.single_data[0].product_description">
+                  <div class="col-md-12" style="background: none; padding: 10px 15px; border-bottom: 1px solid #ccc; margin-top: 0px; font-size: 0.9em;" v-html="dataTable.single_data[0].iklan.product_description">
                   </div>
                 </div>
 
@@ -262,32 +262,45 @@
 
               <div class="col-md-5">
                 <div class="col-md-12" style="padding: 0px;">
-                  <table width="100%" border="0">
-                    <tr>
-                      <td style="font-weight: 0.9em;" width="30%">Pre-Filtered</td>
-                      <td>
-                        <span title="Iklan Ini Lolos Pengecekan Pertama Oleh Sistem" class="badge badge-info" v-if="dataTable.single_data[0].product_pre_filter == 'passed'">@{{ dataTable.single_data[0].product_pre_filter }}</span>
-                        <span title="Iklan Ini Tidak Lolos Pengecekan Pertama Oleh Sistem" class="badge badge-danger" v-if="dataTable.single_data[0].product_pre_filter == 'fail'">@{{ dataTable.single_data[0].product_pre_filter }}</span>
-                      </td>
-                    </tr>
+                  <div class="row">
+                    <div class="col-md-5" style="background: none;">
+                    
+                        <img style="height: 100px; object-fit: contain; margin: 0 auto;" :src="Pof+'/images/users/upload/'+dataTable.single_data[0].user.id+'/profile.png'" :alt="'First slide'">
 
-                    <tr>
-                      <td style="font-weight: 0.9em;" width="30%">Status Iklan</td>
-                      <td>
-                        <select class="form-control" v-model="status_onUpdate">
-                          <option value="pending">Pending</option>
-                          <option value="approved">Approved</option>
-                          <option value="blocked">blocked</option>
-                        </select>
-                      </td>
-                    </tr>
+                    </div>
 
-                    <tr>
-                      <td style="font-weight: 0.9em; padding-top: 15px;" width="30%" colspan="2">
-                        <textarea disabled class="form-control" placeholder="Berikan Alasan Kenapa Anda Merubah Status Ini" style="height: 80px; resize: none;" id="explain" v-model="message"></textarea>
-                      </td>
-                    </tr>
-                  </table>
+                    <div class="col-md-7" style="padding: 0px; padding-right: 10px; padding-top: 5px;">
+                      <table id="my-table" width="100%" border="0" style="font-size: 0.9em; border-color: #ccc;" >
+
+                        <tr>
+                          <td width="35%">Nama  </td>
+                          <td class="answer">@{{ dataTable.single_data[0].user.name }}</td>
+                        </tr>
+
+                        <tr>
+                          <td>email  </td>
+                          <td class="answer">@{{ dataTable.single_data[0].user.email }}</td>
+                        </tr>
+
+
+                      </table>
+                    </div>
+
+                  </div>
+
+                  <div class="row" style="padding: 0px 10px;">
+                    <div class="col-md-12" style="background: none; padding: 10px 15px; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; margin-top: 15px; font-weight: 600;">
+                      Informasi Laporan
+                    </div>
+
+                    <div class="col-md-12 text-right" style="background: none; padding: 10px 15px; border-bottom: 0px solid #ccc; margin-top: 0px; font-size: 0.9em; font-weight: 600; font-style: italic;">
+                      Subject &nbsp; &nbsp; : @{{ dataTable.single_data[0].report_category }}
+                    </div>
+
+                    <div class="col-md-12" style="background: none; padding: 10px 15px; border-bottom: 1px solid #ccc; margin-top: 0px; font-size: 0.9em;" v-html="dataTable.single_data[0].report_reason">
+                    </div>
+                  </div>
+
                 </div>
 
               </div>
@@ -297,7 +310,7 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="update" :disabled="btn_save_disabled">Simpan</button>
+            <button type="button" class="btn btn-primary" @click="update" :disabled="btn_save_disabled">Block Iklan</button>
           </div>
 
         </div>
@@ -336,7 +349,7 @@
          btn_save_disabled   : false,
         btn_update_disabled : false,
         elapsedTime         : 0,
-        contentHeader       : 'Iklan Pengguna (Sudah Disetujui)',
+        contentHeader       : 'Laporan Iklan Dari Pengguna',
         dataSave            : [],
         selectedData        : [],
         changeState         : '',
@@ -346,31 +359,10 @@
         dataTable: {
 
           columns: [
-            { text: "Judul Iklan", searchable: true, index: "product_name", width:"27%", override: function(e){
-              return (e.length > 37) ? e.substr(0, 37)+" ..." : e;
-            }},
-            { text: "Pengiklan", searchable: true, index: "name", width: "10%", override: false},
-            { text: "Harga Iklan", searchable: true, index: "product_price", width: "8%", override: function(e){ 
-              var bilangan = e;
-  
-              var number_string = bilangan.toString(),
-                sisa  = number_string.length % 3,
-                rupiah  = number_string.substr(0, sisa),
-                ribuan  = number_string.substr(sisa).match(/\d{3}/g);
-                  
-              if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-              }
-
-              // Cetak hasil
-              return rupiah; // Hasil: 23.456.789
-            }},
-            { text: "Dibuat Tanggal", searchable: true, index: "product_created_at", width: "12%", override: false},
-            { text: "Foto", searchable: true, index: "photo_count", width: "5%", override: false},
-            { text: "Pre-Filter", searchable: true, index: "product_pre_filter", width: "7%", override: function(e){ 
-              return (e == "passed") ? "<span class='badge badge-info'>"+e+"</span>" : "<span class='badge badge-danger'>"+e+"</span>" }
-            },
+            { text: "Tanggal Pelaporan", searchable: true, index: "created_at", width: "12%", override: false},
+            { text: "Pelapor", searchable: true, index: "name", width: "5%", override: false},
+            { text: "Subject Laporan", searchable: true, index: "report_category", width: "7%", override: false},
+            { text: "Nama Iklan", searchable: true, index: "product_name", width: "7%", override: false},
 
            /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 
             
@@ -392,7 +384,7 @@
       },
       mounted: function(){
         console.log("Vue Ready");
-        // $("#modal_tambah").modal("show");
+        // $('#modal_view').modal('show');
         if('{{ $override }}' == "create"){
           this.add();
         }
@@ -400,7 +392,7 @@
       created: function(){
         var start_time = new Date().getTime();
 
-        axios.get(baseUrl + "/iklan_pengguna/data/list?data=approved")
+        axios.get(baseUrl + "/laporan_user/data/list?data=approved")
               .then((response) => {
                 this.dataTable.data = response.data
                 this.elapsedTime = ((new Date().getTime() - start_time) / 1000).toFixed(2).toString().replace('.', ',');
@@ -444,16 +436,16 @@
 
       methods: {
           edit: function(){
-            // console.log(this.changeState);
-            this.dataTable.single_data = [];
-            axios.post(baseUrl + "/iklan_pengguna/data/get_iklan", {id: this.changeState})
+            var that = this;
+            var data = that.dataTable.data[_.findIndex(that.dataTable.data, function(o) { return o.id == that.changeState })]
+            // console.log(data);
+            axios.post(baseUrl + "/laporan_user/data/get_info", {id: data.id})
                     .then((response) => {
-                      // console.log(response);
+                      console.log(response.data);
                       if(response.data.length != 0){
                         this.dataTable.single_data = response.data;
-                        this.status_onUpdate = response.data[0].product_status;
                         // alert(response.data[0].product_status);
-                        console.log(this.dataTable.single_data);
+                        // console.log(this.dataTable.single_data);
                       }
                       $("#modal_view").modal("show");
                     }).catch((err) => {
@@ -464,43 +456,38 @@
 
          update: function(){
           // event.preventDefault();
-          this.btn_save_disabled = true;
+          // this.btn_save_disabled = true;
           this.dataSave = this.dataTable.single_data;
           that = this;
+          // alert("okee");
 
-          if(this.dataTable.single_data[0].product_status != this.status_onUpdate && this.message == ""){
-            $.alert("Anda Harus Memberikan Alasan Terlebih Dahulu");
-            this.btn_save_disabled = false;
-            return;
-          }
-
-          axios.post(baseUrl + '/iklan_pengguna/update_status', {id: this.dataTable.single_data[0].product_id, status: this.status_onUpdate, message: this.message})
+          axios.post(baseUrl + '/laporan_user/block', {id: this.dataTable.single_data[0].id})
           .then((response) => {
             console.log(response.data);
             if(response.data.status == "berhasil"){
               this.btn_save_disabled = false;
-              // alert(response.data.content);
-              if(response.data.content != "approved"){
-                var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == that.dataTable.single_data[0].product_id })
-                this.dataTable.data.splice(idx, 1);
-                this.dataTable.single_data = [];
-              }
-
+              that.dataTable.data.splice(_.findIndex(that.dataTable.data, function(o){ return o.id == response.data.content }), 1);
+              
               $.toast({
                   heading: 'Perubahan Berhasil',
                   text: 'Status '+this.contentHeader+' Berhasil Diubah.',
                   position: 'top-right',
                   stack: false
               })
-            }
-            else{
+            }else if(response.data.status == 'not found'){
+              $.toast({
+                  heading: 'Perubahan Tidak Berhasil',
+                  text: 'Iklan Yang Ingin Anda Block Tidak Dapat Kami Temukan. Cobalah Untuk Memuat Halaman Terlebih Dahulu.',
+                  position: 'top-right',
+                  stack: false
+              })
+            }else{
               console.log("local")
             }
           }).catch((error) => {
             alert(error);
           }).then((data) => {
-            this.dataTable.single_data.name = ""; this.dataTable.single_data.icon = "";
-            this.dataTable.dataAddForm = [];
+            
           })
         },
 
@@ -522,6 +509,7 @@
         },
 
         selectedUnit: function(a){
+          // console.log(a);
           this.selectedData = a;
           this.changeState = _.first(this.selectedData);
         },

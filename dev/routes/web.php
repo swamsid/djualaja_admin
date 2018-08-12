@@ -321,4 +321,26 @@ Route::group(['middleware' => 'auth'], function () {
 		]);
 	//laporan iklan end
 
+	// route laporan iklan
+		Route::get("/laporan_user", [
+			'uses' 	=> 'admin\laporan_user\laporan_user_controller@index',
+			'as'	=> 'laporan_user.index'
+		]);
+
+		Route::get("/laporan_user/data/list", [
+			'uses' 	=> 'admin\laporan_user\laporan_user_controller@list',
+			'as'	=> 'laporan_user.list'
+		]);
+
+		Route::post("/laporan_user/data/get_info", [
+			'uses' 	=> 'admin\laporan_user\laporan_user_controller@get_info',
+			'as'	=> 'laporan_user.get_info'
+		]);
+
+		Route::post("/laporan_user/block", [
+			'uses' 	=> 'admin\laporan_user\laporan_user_controller@block',
+			'as'	=> 'laporan_user.blocl'
+		]);
+	//laporan iklan end
+
 });

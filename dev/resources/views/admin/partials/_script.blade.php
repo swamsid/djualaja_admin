@@ -25,7 +25,7 @@
 
 <script>
 	baseUrl = '{{ url("/") }}';
-	Pof = 'https://djualaja.com';
+	Pof = 'http://localhost/djualaja';
 
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip();

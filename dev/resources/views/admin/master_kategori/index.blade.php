@@ -535,8 +535,15 @@
                   position: 'top-right',
                   stack: false
               })
-            }
-            else{
+            }else if(response.data.status == 'exist_name'){
+              that.btn_update_disabled = false;
+              $.toast({
+                  heading: 'Penambahan gagal',
+                  text: 'Sudah Ada kategori Dengan Nama '+response.data.content+'. Data Tidak Bisa Kami Simpan.',
+                  position: 'top-right',
+                  stack: false
+              })
+            }else{
               console.log("local")
             }
           }).catch((error) => {
@@ -585,7 +592,7 @@
                       action: function () {
                           axios.post(baseUrl + '/master_kategori/update', {data: that.dataSave, formAd: that.dataTable.dataAddForm, deleted: that.dataTable.deletedElementChild})
                                 .then((response) => {
-                                  console.log(response.data);
+                                  // console.log(response.data);
                                   if(response.data.status == "berhasil"){
                                     that.btn_update_disabled = false;
                                     that.dataTable.data[_.findIndex(that.dataTable.data, function(o) { return o.id == response.data.content.id; })].name = response.data.content.name;
@@ -597,8 +604,15 @@
                                         position: 'top-right',
                                         stack: false
                                     })
-                                  }
-                                  else{
+                                  }else if(response.data.status == 'exist_name'){
+                                    that.btn_update_disabled = false;
+                                    $.toast({
+                                        heading: 'Penambahan gagal',
+                                        text: 'Sudah Ada kategori Dengan Nama '+response.data.content+'. Data Tidak Bisa Kami Simpan.',
+                                        position: 'top-right',
+                                        stack: false
+                                    })
+                                  }else{
                                     console.log("localServer Error;")
                                   }
                                 }).catch((error) => {

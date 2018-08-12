@@ -265,8 +265,8 @@
                       <td style="font-weight: 0.9em;">Pengiklan Ini Sedang Di</td>
                       <td>
                         <select class="form-control" v-model="sts">
-                          <option value="banned">Banned</option>
-                          <option value="null">Unbanned</option>
+                          <option value="null">aktif</option>
+                          <option value="inactive">inactive</option>
                         </select>
                       </td>
                     </tr>

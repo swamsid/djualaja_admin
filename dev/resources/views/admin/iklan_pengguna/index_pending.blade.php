@@ -277,7 +277,7 @@
                         <select class="form-control" v-model="status_onUpdate">
                           <option value="pending">Pending</option>
                           <option value="approved">Approved</option>
-                          <option value="reject">Rejected</option>
+                          <option value="blocked">blocked</option>
                         </select>
                       </td>
                     </tr>
