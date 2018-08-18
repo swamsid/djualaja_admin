@@ -94,7 +94,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <nav aria-label="breadcrumb" role="navigation">
         <div class="row">
-          <div class="col-11">
+          <div class="col-12">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Data Master</a></li>
@@ -102,7 +102,7 @@
             </ol>
           </div>
 
-          <div class="col-1" style="padding: 5px 0px; background: none; height: 45px; border: 0px solid #ddd;">
+          {{-- <div class="col-1" style="padding: 5px 0px; background: none; height: 45px; border: 0px solid #ddd;">
             
             <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none;">
               <button type="button" class="btn btn-dark btn-xs" style="border: 0px solid white; height: 35px;">
@@ -110,7 +110,7 @@
               </button>
             </a>
 
-          </div>
+          </div> --}}
         </div>
       </nav>
 
@@ -118,15 +118,15 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
       <div class="card">
-        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="col-md-12" style="padding-left: 5px;">
             <div class="card-body" style="padding: 0px;">
               <ul class="opsi">
                 <li class="hovered" @click="add"><a href="#"><i class="fa fa-plus"></i> &nbsp;Tambah Data</a></li>
                 <li class="hovered" @click="edit"><a href="#"><i class="fa fa-pencil"></i> &nbsp;Edit Data</a></li>
                 <li class="hovered" @click="hapus"><a href="#"><i class="fa fa-eraser"></i> &nbsp;Hapus Data</a></li>
 
-                <li class="hovered" style="float: right;"><a href="#news"><i class="fa fa-file-pdf-o"></i> &nbsp;Print Pdf</a></li>
-                <li class="hovered" style="float: right;"><a href="#contact"><i class="fa fa-file-excel-o"></i> &nbsp;Print Excel</a></li>
+                {{-- <li class="hovered" style="float: right;"><a href="#news"><i class="fa fa-file-pdf-o"></i> &nbsp;Print Pdf</a></li> --}}
+                {{-- <li class="hovered" style="float: right;"><a href="#contact"><i class="fa fa-file-excel-o"></i> &nbsp;Print Excel</a></li> --}}
               </ul>
             </div>
         </div>
@@ -157,7 +157,7 @@
 
           <div class="row">
             <div class="col-12">
-              <data-list-category :list-data="dataTable.data" :size="dataTable.size" :columns="dataTable.columns" :data_category="dataTable.single_data" :dataTab="dataTable.data" @get_select_unit="selectedUnit"></data-list-category>
+              <data-list-category :list-data="dataTable.data" :size="dataTable.size" :columns="dataTable.columns" :data_category="dataTable.single_data" :dataTab="dataTable.data" @get_select_unit="selectedUnit" @view_one="view_one" @edit_one="edit_one" @delete_one="delete_one" :button_helper="dataTable.button_helper"></data-list-category>
             </div>
           </div>
         </div>
@@ -348,6 +348,94 @@
       </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="modal_edit_one" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="border-radius: 1px; font-size: 0.8em;">
+          <div class="modal-header" style="padding: 15px;">
+            <h5 class="modal-title" id="exampleModalLabel" style="color: #263238;">Edit Data @{{ contentHeader }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="padding: 15px; background: white;">
+
+            <div>
+
+              <div class="row form-table">
+                <div class="col-md-3 title">
+                  Nama Fitur
+                </div>
+
+                <div class="col-md-8">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Input Features Name" v-model="dataTable.single_data.paid_name" maxlength="70">
+
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" style="font-size:0.9em; padding: 10px 15px 5px 15px;" disabled>
+                        <span v-text="70 - dataTable.single_data.paid_name.length"></span> / 70
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row form-table">
+                <div class="col-md-3 title">
+                  Deskripsi Fitur
+                </div>
+
+                <div class="col-md-8">
+                  <textarea class="editor"></textarea>
+                </div>
+              </div>
+
+              <div class="row form-table">
+                <div class="col-md-3 title">
+                  Harga Fitur
+                </div>
+
+                <div class="col-md-8">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Input Features Price (number only)" v-model="dataTable.single_data.paid_price" @keypress="onlyNumber(this.event, dataTable.single_data.paid_price)">
+
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" style="font-size:0.9em; padding: 10px 10px 5px 10px;" disabled>
+                        Token
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row form-table">
+                <div class="col-md-3 title">
+                  Durasi Fitur
+                </div>
+
+                <div class="col-md-8">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Input Features Duration number only)" v-model="dataTable.single_data.paid_duration" @keypress="onlyNumber(this.event, dataTable.single_data.paid_duration)">
+
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" style="font-size:0.9em; padding: 10px 15px 5px 15px;" disabled>
+                        Hari
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="editSave" :disabled="btn_update_disabled">Simpan Perubahan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 @endsection
@@ -408,6 +496,8 @@
           ],
 
           data: [],
+
+          button_helper: ['E', 'D'],
 
           single_data: {
             paid_code: 'null',
@@ -643,6 +733,64 @@
             event.preventDefault()
           else
             return true;
+        },
+
+        view_one: function(id){
+          alert('View StandBy');
+        },
+        edit_one: function(id){
+          var state = id;
+          var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == state });
+          this.dataTable.single_data.paid_code = this.dataTable.data[idx].paid_code;
+          this.dataTable.single_data.paid_name = this.dataTable.data[idx].paid_name;
+          this.dataTable.single_data.paid_description = this.dataTable.data[idx].paid_description;
+          this.dataTable.single_data.paid_price = this.dataTable.data[idx].paid_price.toString();
+          this.dataTable.single_data.paid_duration = this.dataTable.data[idx].paid_duration.toString();
+
+          $('.editor').froalaEditor('html.set', this.dataTable.single_data.paid_description);
+
+          $("#modal_edit_one").modal("show");
+        },
+        delete_one: function(id){
+          that = this;
+          $.confirm({
+              title: 'Hapus Kategori?',
+              content: 'Data '+this.contentHeader+' Akan Dihapus, Apakah Anda Yakin ?.',
+              autoClose: 'Tidak|5000',
+              buttons: {
+                  deleteUser: {
+                      text: 'Ya',
+                      action: function () {
+                          axios.post(baseUrl + '/master_features_paid/delete', [id])
+                            .then((response) => {
+                              // console.log(response.data);
+                              if(response.data.status == "berhasil"){
+                                $.toast({
+                                    heading: 'Hapus Data Berhasil',
+                                    text: 'Data '+that.contentHeader+' Berhasil Dihapus.',
+                                    position: 'top-right',
+                                    stack: false
+                                })
+                              }
+                              else{
+                                console.log("local")
+                              }
+                            }).catch((error) => {
+                              alert(error);
+                            }).then(() => {
+                                that.dataTable.data.splice(_.findIndex(that.dataTable.data, function(o){ return o.id == id }), 1);
+
+                                if(that.selectedData.length != 0){
+                                  that.selectedData.splice(_.findIndex(that.selectedData, function(o){ return o == id }), 1);
+                                }
+                            })
+                      }
+                  },
+                  Tidak: function () {
+                      $.alert('Hapus Data Dibatalkan.');
+                  }
+              }
+          });
         }
 
       }

@@ -83,7 +83,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <nav aria-label="breadcrumb" role="navigation">
         <div class="row">
-          <div class="col-11">
+          <div class="col-12">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Data Master</a></li>
@@ -91,7 +91,7 @@
             </ol>
           </div>
 
-          <div class="col-1" style="padding: 5px 0px; background: none; height: 45px; border: 0px solid #ddd;">
+          {{-- <div class="col-1" style="padding: 5px 0px; background: none; height: 45px; border: 0px solid #ddd;">
             
             <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none;">
               <button type="button" class="btn btn-dark btn-xs" style="border: 0px solid white; height: 35px;">
@@ -99,7 +99,7 @@
               </button>
             </a>
 
-          </div>
+          </div> --}}
         </div>
       </nav>
 
@@ -107,7 +107,7 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
       <div class="card">
-        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="col-md-12" style="padding-left: 5px;">
             <div class="card-body" style="padding: 0px;">
               <ul class="opsi">
                 <li class="hovered" @click="add"><a href="#"><i class="fa fa-plus"></i> &nbsp;Tambah Data</a></li>
@@ -146,7 +146,7 @@
 
           <div class="row">
             <div class="col-12">
-              <data-list-category :list-data="dataTable.data" :size="dataTable.size" :columns="dataTable.columns" :data_category="dataTable.single_data" :dataTab="dataTable.data" @get_select_unit="selectedUnit"></data-list-category>
+              <data-list-category :list-data="dataTable.data" :size="dataTable.size" :columns="dataTable.columns" :data_category="dataTable.single_data" :dataTab="dataTable.data" @get_select_unit="selectedUnit" @view_one="view_one" @edit_one="edit_one" @delete_one="delete_one" :button_helper="dataTable.button_helper"></data-list-category>
             </div>
           </div>
         </div>
@@ -542,6 +542,7 @@
           ],
 
           data: [],
+          button_helper: ['D'],
 
           single_data: {
           	type_popup:  'text',
@@ -812,6 +813,55 @@
         getIcon: function(event){
           event.preventDefault();
           window.open("https://fontawesome.com/v4.7.0/icons/")
+        },
+
+        view_one: function(id){
+          alert('View StandBy');
+        },
+        edit_one: function(id){
+          alert('Edit StandBy');
+        },
+        delete_one: function(id){
+          that = this;
+
+          $.confirm({
+              title: 'Hapus PopUp?',
+              content: 'Data '+this.contentHeader+' Akan Dihapus, Apakah Anda Yakin ?.',
+              autoClose: 'Tidak|5000',
+              buttons: {
+                  deleteUser: {
+                      text: 'Ya',
+                      action: function () {
+                          axios.post(baseUrl + '/pop_up/delete', [id])
+                            .then((response) => {
+                              console.log(response.data);
+                              if(response.data.status == "berhasil"){
+                                $.toast({
+                                    heading: 'Hapus Data Berhasil',
+                                    text: 'Data '+that.contentHeader+' Berhasil Dihapus.',
+                                    position: 'top-right',
+                                    stack: false
+                                })
+                              }
+                              else{
+                                console.log("local")
+                              }
+                            }).catch((error) => {
+                              alert(error);
+                            }).then(() => {
+                                  that.dataTable.data.splice(_.findIndex(that.dataTable.data, function(o){ return o.id == id }), 1);
+
+                                  if(that.selectedData.length != 0){
+                                    that.selectedData.splice(_.findIndex(that.selectedData, function(o){ return o == id }), 1);
+                                  }
+                            })
+                      }
+                  },
+                  Tidak: function () {
+                      $.alert('Hapus Data Dibatalkan.');
+                  }
+              }
+          });
         }
       }
     })

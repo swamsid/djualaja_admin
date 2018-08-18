@@ -98,7 +98,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <nav aria-label="breadcrumb" role="navigation">
         <div class="row">
-          <div class="col-11">
+          <div class="col-12">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Pengelola Iklan</a></li>
@@ -106,7 +106,7 @@
             </ol>
           </div>
 
-          <div class="col-1" style="padding: 5px 0px; background: none; height: 45px; border: 0px solid #ddd;">
+          {{-- <div class="col-1" style="padding: 5px 0px; background: none; height: 45px; border: 0px solid #ddd;">
             
             <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none;">
               <button type="button" class="btn btn-dark btn-xs" style="border: 0px solid white; height: 35px;">
@@ -114,7 +114,7 @@
               </button>
             </a>
 
-          </div>
+          </div> --}}
         </div>
       </nav>
 
@@ -122,7 +122,7 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
       <div class="card">
-        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="col-md-12" style="padding-left: 5px;">
             <div class="card-body" style="padding: 0px;">
               <ul class="opsi">
                 {{-- <li class="hovered" @click="add"><a href="#"><i class="fa fa-plus"></i> &nbsp;Tambah Data</a></li> --}}
@@ -161,7 +161,7 @@
 
           <div class="row">
             <div class="col-12">
-              <data-list-category :list-data="dataTable.data" :size="dataTable.size" :columns="dataTable.columns" :data_category="dataTable.single_data" :dataTab="dataTable.data" @get_select_unit="selectedUnit"></data-list-category>
+              <data-list-category :list-data="dataTable.data" :size="dataTable.size" :columns="dataTable.columns" :data_category="dataTable.single_data" :dataTab="dataTable.data" @get_select_unit="selectedUnit" @view_one="view_one" @edit_one="edit_one" @delete_one="delete_one" :button_helper="dataTable.button_helper"></data-list-category>
             </div>
           </div>
         </div>
@@ -385,6 +385,7 @@
             
           ],
 
+          button_helper: ['V'],
           data: [],
           single_data: [],
         }
@@ -529,6 +530,29 @@
         getIcon: function(event){
           event.preventDefault();
           window.open("https://fontawesome.com/v4.7.0/icons/")
+        },
+
+        view_one: function(id){
+          this.dataTable.single_data = [];
+          axios.post(baseUrl + "/iklan_pengguna/data/get_iklan", {id: id})
+                  .then((response) => {
+                    // console.log(response);
+                    if(response.data.length != 0){
+                      this.dataTable.single_data = response.data;
+                      this.status_onUpdate = response.data[0].product_status;
+                      // alert(response.data[0].product_status);
+                      console.log(this.dataTable.single_data);
+                    }
+                    $("#modal_view").modal("show");
+                  }).catch((err) => {
+                    console.log(err);
+                  })
+        },
+        edit_one: function(id){
+          alert('Edit StandBy');
+        },
+        delete_one: function(id){
+          alert('Delete StandBy');
         }
       }
     })

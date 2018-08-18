@@ -20,6 +20,10 @@ Vue.component('data-list-category',{
     data_category:{
       type: Array,
       required:false
+    },
+    button_helper:{
+      type: Array,
+      required:false
     }
   },
   mounted: function(){
@@ -32,6 +36,15 @@ Vue.component('data-list-category',{
       },
       prevPage(){
         this.pageNumber--;
+      },
+      view_one(id){
+        this.$emit("view_one", id);
+      },
+      edit_one(id){
+        this.$emit("edit_one", id);
+      },
+      delete_one(id){
+        this.$emit("delete_one", id);
       }
   },
   watch: {
@@ -125,6 +138,7 @@ Vue.component('data-list-category',{
                     <tr>
                         <th width="5%">#</th>
                         <th v-for="column in columns" :width="column.width">{{ column.text }}</th>
+                        <th width="10%" v-if="button_helper.length != 0">Opsi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -138,6 +152,12 @@ Vue.component('data-list-category',{
                           <input type="checkbox" :value="data.id" v-model="selected_unit">
                         </td>
                         <td :title="data[column.index]" :style="(jQuery.isFunction(column.style)) ? column.style(data[column.index]) : column.style" v-for="column in columns" :width="column.width" v-html="(column.override == false) ? data[column.index] : column.override(data[column.index])"></td>
+                        
+                        <td v-if="button_helper.length != 0">
+                          <span v-if="button_helper.findIndex(e => e == 'V') >= 0" @click="view_one(data.id)" class='badge badge-success' style="cursor:pointer" title="Lihat Data"><i class="fa fa-eye"></i></span>
+                          <span v-if="button_helper.findIndex(e => e == 'E') >= 0" @click="edit_one(data.id)" class='badge badge-success' style="cursor:pointer" title="Edit Data"><i class="fa fa-pencil-square"></i></span>
+                          <span v-if="button_helper.findIndex(e => e == 'D') >= 0" @click="delete_one(data.id)" class='badge badge-success' style="cursor:pointer" title="Hapus Data"><i class="fa fa-eraser"></i></span>
+                        </td>
                     </tr>
                     
                   </tbody>

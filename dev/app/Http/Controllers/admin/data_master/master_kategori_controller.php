@@ -40,7 +40,7 @@ class master_kategori_controller extends Controller
 
     	$id = (DB::table('categories')->max("id") + 1);
 
-        $cek = DB::table('categories')->where('level', 1)->where('name', 'like', '%'.$request->data['name'].'%')->first();
+        $cek = DB::table('categories')->where('level', 1)->where('name', 'like', '%'.$request->data['name'].'%')->whereNull('deleted_at')->first();
 
         if($cek){
             return json_encode([
@@ -85,7 +85,7 @@ class master_kategori_controller extends Controller
     	// return json_encode($request->all());
     	$id = DB::table("categories")->where("category_id", $request->data['category_id'])->select("id")->first()->id;
 
-        $cek = DB::table('categories')->where('level', 1)->where('name', 'like', '%'.$request->data['name'].'%')->first();
+        $cek = DB::table('categories')->where('level', 1)->where('name', 'like', '%'.$request->data['name'].'%')->where('category_id', '!=', $request->data['category_id'])->whereNull('deleted_at')->first();
 
         if($cek){
             return json_encode([

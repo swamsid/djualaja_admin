@@ -22,7 +22,7 @@ class filter_controller extends Controller
     }
 
     public function list(){
-    	$data = DB::table('filter')->select('id', 'kalimat', 'created_at')->whereNull('deleted_at')->get();
+    	$data = DB::table('filter')->select('id', 'kalimat', 'created_at')->whereNull('deleted_at')->orderBy('created_at', 'desc')->get();
 
     	return json_encode($data);
     }

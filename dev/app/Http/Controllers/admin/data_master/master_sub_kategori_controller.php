@@ -36,7 +36,7 @@ class master_sub_kategori_controller extends Controller
 
     	$id = (DB::table('categories')->max("id") + 1);
 
-        $cek = DB::table('categories')->where('level', 2)->where('name', 'like', '%'.$request->name.'%')->first();
+        $cek = DB::table('categories')->where('level', 2)->where('name', 'like', '%'.$request->name.'%')->whereNull('deleted_at')->first();
 
         if($cek){
             return json_encode([
@@ -84,7 +84,9 @@ class master_sub_kategori_controller extends Controller
     public function update(Request $request){
     	// return json_encode($request->all());
 
-        $cek = DB::table('categories')->where('level', 2)->where('name', 'like', '%'.$request->name.'%')->first();
+        $cek = DB::table('categories')->where('level', 2)->where('name', 'like', '%'.$request->name.'%')->where('category_id', '!=', $request->category_id)->whereNull('deleted_at')->first();
+
+        // return json_encode($cek);
 
         if($cek){
             return json_encode([
@@ -128,6 +130,16 @@ class master_sub_kategori_controller extends Controller
 
     		return json_encode($response);
     	}
+
+        $response = [
+                'status'    => 'berhasil',
+                'content'   => $data = DB::table("categories as a")
+                                            ->leftJoin("categories as b", "a.parrent", "=", "b.id")
+                                            ->select("a.id", "a.category_id", "a.name", "a.icon", "a.level", "a.parrent", "a.created_by", "b.name as parrent_name", "b.category_id as parrent_cat_id", DB::raw("date(a.created_at) as created_at"))
+                                            ->where("a.id", $id)->orderBy("a.id", "desc")->first()
+            ];
+
+            return json_encode($response);
     }
 
     public function delete(Request $request){

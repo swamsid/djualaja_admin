@@ -1,6 +1,6 @@
 @extends("admin.app")
 
-@section("title", " Master Kategori")
+@section("title", " Master Pengiklan")
 
 
 @section("extra_styles")
@@ -88,7 +88,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <nav aria-label="breadcrumb" role="navigation">
         <div class="row">
-          <div class="col-11">
+          <div class="col-12">
             <ol class="breadcrumb breadcrumb-custom">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Data Master</a></li>
@@ -96,7 +96,7 @@
             </ol>
           </div>
 
-          <div class="col-1" style="padding: 5px 0px; background: none; height: 45px; border: 0px solid #ddd;">
+          {{-- <div class="col-1" style="padding: 5px 0px; background: none; height: 45px; border: 0px solid #ddd;">
             
             <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none;">
               <button type="button" class="btn btn-dark btn-xs" style="border: 0px solid white; height: 35px;">
@@ -104,7 +104,7 @@
               </button>
             </a>
 
-          </div>
+          </div> --}}
         </div>
       </nav>
 
@@ -112,7 +112,7 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
       <div class="card">
-        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="col-md-12" style="padding-left: 5px;">
             <div class="card-body" style="padding: 0px;">
               <ul class="opsi">
                 <li class="hovered" @click="edit"><a href="#"><i class="fa fa-pencil"></i> &nbsp;Lihat Profil lengkap</a></li>
@@ -150,7 +150,7 @@
 
           <div class="row">
             <div class="col-12">
-              <data-list-category :list-data="dataTable.data" :size="dataTable.size" :columns="dataTable.columns" :data_category="dataTable.single_data" :dataTab="dataTable.data" @get_select_unit="selectedUnit"></data-list-category>
+              <data-list-category :list-data="dataTable.data" :size="dataTable.size" :columns="dataTable.columns" :data_category="dataTable.single_data" :dataTab="dataTable.data" @get_select_unit="selectedUnit" @view_one="view_one" @edit_one="edit_one" @delete_one="delete_one" :button_helper="dataTable.button_helper"></data-list-category>
             </div>
           </div>
         </div>
@@ -262,7 +262,7 @@
                 <div class="col-md-12" style="padding: 0px;">
                   <table width="100%" border="0">
                     <tr>
-                      <td style="font-weight: 0.9em;">Pengiklan Ini Sedang Di</td>
+                      <td style="font-weight: 0.9em;">Pengiklan Ini Sedang</td>
                       <td>
                         <select class="form-control" v-model="sts">
                           <option value="null">aktif</option>
@@ -445,10 +445,9 @@
             
           ],
 
+          button_helper: ['V'],
           data: [],
-
           single_data: [],
-
           dataAddForm: [],
           deletedElementChild: [],
 
@@ -516,13 +515,15 @@
 
       methods: {
         edit: function(event){
-          event.preventDefault();
+          // event.preventDefault();
 
           if(this.selectedData != 0){
             var state = this.changeState;
             var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == state });
             this.dataTable.single_data = this.dataTable.data[idx];            
             this.sts = (this.dataTable.single_data.status == null) ? 'null' : this.dataTable.single_data.status;
+          }else{
+            this.dataTable.single_data = [];
           }
 
           $("#modal_view").modal("show");
@@ -658,6 +659,24 @@
         getIcon: function(event){
           event.preventDefault();
           window.open("https://fontawesome.com/v4.7.0/icons/")
+        },
+
+        view_one: function(id){
+          var state = id;
+          var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == state });
+          this.dataTable.single_data = this.dataTable.data[idx];            
+          this.sts = (this.dataTable.single_data.status == null) ? 'null' : this.dataTable.single_data.status;
+
+          // console.log(this.selectedData);
+
+          $("#modal_view").modal("show");
+          $('#explain').val("");
+        },
+        edit_one: function(id){
+          console.log('standBy');
+        },
+        delete_one: function(id){
+          console.log('standBy');
         }
       }
     })
