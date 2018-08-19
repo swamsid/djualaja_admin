@@ -1,6 +1,6 @@
 @extends("admin.app")
 
-@section("title", " Master Kategori")
+@section("title", " Data Iklan Pending")
 
 
 @section("extra_styles")

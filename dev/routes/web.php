@@ -270,6 +270,33 @@ Route::group(['middleware' => 'auth'], function () {
 		]);
 	//route voucher
 
+	// route koin
+		Route::get("/koin", [
+			'uses' 	=> 'admin\data_master\koin_controller@index',
+			'as'	=> 'voucher.index'
+		]);
+
+		Route::get("/voucher/data/list", [
+			'uses' 	=> 'admin\data_master\voucher_controller@list',
+			'as'	=> 'voucher.list'
+		]);
+
+		Route::post("/voucher/save", [
+			'uses' 	=> 'admin\data_master\voucher_controller@save',
+			'as'	=> 'voucher.save'
+		]);
+
+		Route::post("/voucher/update", [
+			'uses' 	=> 'admin\data_master\voucher_controller@update',
+			'as'	=> 'voucher.update'
+		]);
+
+		Route::post("/voucher/delete", [
+			'uses' 	=> 'admin\data_master\voucher_controller@delete',
+			'as'	=> 'voucher.delete'
+		]);
+	//route koin
+
 	// route filter
 		Route::get("/filter", [
 			'uses' 	=> 'admin\data_master\filter_controller@index',

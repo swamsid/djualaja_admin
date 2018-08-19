@@ -1,6 +1,6 @@
 @extends("admin.app")
 
-@section("title", " Master Kategori")
+@section("title", " Master Filter")
 
 
 @section("extra_styles")

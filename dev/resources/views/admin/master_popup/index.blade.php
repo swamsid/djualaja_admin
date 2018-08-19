@@ -1,6 +1,6 @@
 @extends("admin.app")
 
-@section("title", " Master Sub Kategori")
+@section("title", " Master Pop Up")
 
 
 @section("extra_styles")

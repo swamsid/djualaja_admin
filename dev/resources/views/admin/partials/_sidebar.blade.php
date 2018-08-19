@@ -68,6 +68,21 @@
             </li>
 
             <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#page-layouts-koin" aria-expanded="false" aria-controls="page-layouts">
+                <span class="menu-title">Transaksi</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-apps menu-icon"></i>
+              </a>
+              <div class="collapse" id="page-layouts-koin">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ url('/koin') }}">Transaksi Koin</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#reporting" aria-expanded="false" aria-controls="page-layouts">
                 <span class="menu-title">Reporting</span>
                 <i class="menu-arrow"></i>

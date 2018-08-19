@@ -1,6 +1,6 @@
 @extends("admin.app")
 
-@section("title", " Data Iklan Rejected")
+@section("title", " Data Transaksi Koin")
 
 
 @section("extra_styles")
@@ -336,11 +336,11 @@
          btn_save_disabled   : false,
         btn_update_disabled : false,
         elapsedTime         : 0,
-        contentHeader       : 'Iklan Pengguna (Ditolak)',
+        contentHeader       : 'Transaksi Koin',
         dataSave            : [],
         selectedData        : [],
         changeState         : '',
-        status_onUpdate: 'blocked',
+        status_onUpdate: 'approved',
         message:"",
 
         dataTable: {
@@ -401,7 +401,7 @@
       created: function(){
         var start_time = new Date().getTime();
 
-        axios.get(baseUrl + "/iklan_pengguna/data/list?data=blocked")
+        axios.get(baseUrl + "/iklan_pengguna/data/list?data=approved")
               .then((response) => {
                 this.dataTable.data = response.data
                 this.elapsedTime = ((new Date().getTime() - start_time) / 1000).toFixed(2).toString().replace('.', ',');
@@ -481,7 +481,7 @@
             if(response.data.status == "berhasil"){
               this.btn_save_disabled = false;
               // alert(response.data.content);
-              if(response.data.content != "reject"){
+              if(response.data.content != "approved"){
                 var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == that.dataTable.single_data[0].product_id })
                 this.dataTable.data.splice(idx, 1);
                 this.dataTable.single_data = [];

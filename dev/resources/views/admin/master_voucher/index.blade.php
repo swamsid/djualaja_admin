@@ -1,6 +1,6 @@
 @extends("admin.app")
 
-@section("title", " Master Sub Kategori")
+@section("title", " Master Voucher")
 
 
 @section("extra_styles")
