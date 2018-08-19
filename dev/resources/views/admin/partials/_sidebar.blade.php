@@ -76,7 +76,7 @@
               <div class="collapse" id="page-layouts-koin">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> 
-                    <a class="nav-link" href="{{ url('/koin') }}">Transaksi Koin</a>
+                    <a class="nav-link" href="{{ url('/transaksi') }}">Transaksi Koin</a>
                   </li>
                 </ul>
               </div>
