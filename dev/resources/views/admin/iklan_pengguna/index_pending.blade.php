@@ -484,6 +484,7 @@
               if(response.data.content != "pending"){
                 var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == that.dataTable.single_data[0].product_id })
                 this.dataTable.data.splice(idx, 1);
+                $('#modal_view').modal('toggle');
                 this.dataTable.single_data = [];
               }
 

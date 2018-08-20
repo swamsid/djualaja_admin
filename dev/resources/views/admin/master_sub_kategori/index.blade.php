@@ -215,7 +215,7 @@
               </tr>
 
               <tr>
-                <td width="30%" class="title"> Nama Sub Kategori </td>
+                <td width="30%" class="title"> Sub Kategori </td>
                 <td width="65%">
                     <input type="text" class="form-control" id="kategori_name" placeholder="Input Sub Category Name" style="width: 100%" v-model="dataTable.single_data.name">
                 </td>
@@ -224,7 +224,7 @@
               </tr>
 
               <tr>
-                <td width="25%" class="title"> Sub Kategori Dari </td>
+                <td width="25%" class="title"> Kategori </td>
                 <td>
                   <select class="form-control" v-model="dataTable.single_data.parrent">
                   	<option v-for="parrent in categoryParrent" :value="parrent.parrent">@{{ parrent.name }}</option>
@@ -260,7 +260,7 @@
 
             <table id="form-table" border="0">
               <tr>
-                <td width="30%" class="title"> Nama Sub Kategori </td>
+                <td width="30%" class="title"> Sub Kategori </td>
                 <td width="65%">
                     <input type="text" class="form-control" id="kategori_name" placeholder="Input Sub Category Name" style="width: 100%" v-model="dataTable.single_data.name">
                 </td>
@@ -269,7 +269,7 @@
               </tr>
 
               <tr>
-                <td width="25%" class="title"> Sub Kategori Dari </td>
+                <td width="25%" class="title"> Kategori </td>
                 <td>
                   <select class="form-control" v-model="dataTable.single_data.parrent">
                     <option v-for="parrent in categoryParrent" :value="parrent.parrent">@{{ parrent.name }}</option>
@@ -318,8 +318,8 @@
         dataTable: {
           columns: [
             { text: "Nomor Kategori", searchable: true, index: "category_id", width:"15%", override: false },
-            { text: "Nama Kategori", searchable: true, index: "name", width:"15%", override: false },
-            { text: "Sub Kategori Dari", searchable: true, index: "parrent_name", width:"13%", override: false },
+            { text: "Sub Kategori", searchable: true, index: "name", width:"15%", override: false },
+            { text: "Kategori", searchable: true, index: "parrent_name", width:"13%", override: false },
             { text: "Dibuat", searchable: true, index: "created_at", width:"10%", override: false },
             
             /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 
