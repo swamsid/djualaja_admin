@@ -481,7 +481,7 @@
             if(response.data.status == "berhasil"){
               this.btn_save_disabled = false;
               // alert(response.data.content);
-              if(response.data.content != "reject"){
+              if(response.data.content != "blocked"){
                 var idx = _.findIndex(this.dataTable.data, function(o){ return o.id == that.dataTable.single_data[0].product_id })
                 this.dataTable.data.splice(idx, 1);
                 $('#modal_view').modal('toggle');

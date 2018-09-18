@@ -41,9 +41,19 @@ class ads_controller extends Controller
     }
 
     public function update_status(Request $request){
-    	$data = DB::table('tb_product_sales')->where("product_id", $request->id);
+        // return json_encode($request->all());
 
-    	$data->update([ "product_status" 	=> $request->status ]);
+    	$data = DB::table('tb_product_sales')->where("product_id", $request->id);
+        $banned = null;
+
+        if($request->status == 'blocked'){
+            $banned = date('Y-m-d H:i:s');
+        }
+
+    	$data->update([ 
+            "product_status" 	=> $request->status,
+            "banned_at"         => $banned
+        ]);
 
 		$response = [
     		'status' 	=> 'berhasil',
@@ -51,7 +61,5 @@ class ads_controller extends Controller
     	];
     	
 		return json_encode($response);
-    	
-
     }
 }

@@ -6,6 +6,9 @@ Vue.component('data-list-category',{
       row: 10,
       dataTab: [],
       selected_unit: [],
+      sortBy: '',
+      order: 'asc',
+      prepend: ''
     }
   },
   props:{
@@ -45,6 +48,18 @@ Vue.component('data-list-category',{
       },
       delete_one(id){
         this.$emit("delete_one", id);
+      },
+      sortMe(alpha){
+        if(alpha == this.sortBy){
+          this.order = (this.order == 'asc') ? 'desc' : 'asc';
+
+          this.dataTab = _.orderBy(this.dataTab, [this.sortBy], [this.order]);
+        }else{
+          this.order = 'asc';
+          this.sortBy = alpha;
+
+          this.dataTab = _.orderBy(this.dataTab, [this.sortBy], [this.order]);
+        }
       }
   },
   watch: {
@@ -56,8 +71,10 @@ Vue.component('data-list-category',{
     },
 
     listData: function(value){
-      this.dataTab = value;
-      console.log("List Data Change");
+      this.sortBy = this.columns[0].index;
+      this.order = 'asc'
+      this.dataTab = _.orderBy(value, [this.sortBy], [this.order]);
+      console.log(this.dataTab);
       // alert(a);
     },
 
@@ -75,7 +92,7 @@ Vue.component('data-list-category',{
       // console.log(_.without(data, undefined))
 
       this.dataTab = _.without(data, undefined)
-    }
+    },
   },
   computed:{
     pageCount(){
@@ -137,8 +154,12 @@ Vue.component('data-list-category',{
                   <thead>
                     <tr>
                         <th width="5%">#</th>
-                        <th v-for="column in columns" :width="column.width">{{ column.text }}</th>
-                        <th width="10%" v-if="button_helper.length != 0">Opsi</th>
+                        <th v-for="column in columns" :width="column.width" @click="sortMe(column.index)" style="cursor: pointer;">
+                          {{ column.text }}
+                          <i class="fa fa-caret-up" v-if="sortBy == column.index && order == 'asc'"></i>
+                          <i class="fa fa-caret-down" v-if="sortBy == column.index && order == 'desc'"></i>
+                        </th>
+                        <th width="8%" v-if="button_helper.length != 0">Opsi</th>
                     </tr>
                   </thead>
                   <tbody>

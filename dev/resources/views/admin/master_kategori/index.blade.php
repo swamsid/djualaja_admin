@@ -466,7 +466,7 @@
             { text: "Nomor Kategori", searchable: true, index: "category_id", width:"15%", override: false},
             { text: "Nama Kategori", searchable: true, index: "name", width:"20%", override: false },
             { text: "Ikon Kategori", searchable: true, index: "icon", width:"10%", override: function(e){ return '<i class="fa fa-'+e+'"></i>' } },
-            { text: "Form Tambahan", searchable: true, index: "count", width:"10%", override: function(e){ return e+" <small>Form</small>" } },
+            { text: "Form Tambahan", searchable: true, index: "count", width:"13%", override: function(e){ return e+" <small>Form</small>" } },
 
            /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 
             
