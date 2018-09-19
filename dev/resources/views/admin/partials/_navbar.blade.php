@@ -1,6 +1,6 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo" href="index.html"><img src="{{ asset('images/header.png') }}" alt="logo"/></a>
+        <a class="navbar-brand brand-logo" href="index.html"><img src="{{ asset('images/header.png') }}" alt="logo" style="height:100%; margin-left: 2em;" /></a>
         <a class="navbar-brand brand-logo-mini" href="index.html"><!-- <img src="images/header_mini.png" alt="logo"/> --></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -148,7 +148,7 @@
                 Activity Log &nbsp;<small style="color: #999;">(Hari Ini)</small>
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="{{ route('logout') }}">
                 <i class="mdi mdi-logout mr-2 text-primary"></i>
                 Keluar
               </a>
