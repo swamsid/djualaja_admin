@@ -430,7 +430,7 @@
             { text: "Nama Pengiklan", searchable: true, index: "name", width:"15%", override: false},
             { text: "Tanggal Gabung", searchable: true, index: "created_at", width:"20%", override: false },
             { text: "Kota/Kabupaten", searchable: true, index: "kota", width:"10%", override: false },
-            { text: "status", searchable: true, index: "confirmed", width:"10%", override: function(e){ return (e == 1) ? "<span class='badge badge-info'>Verified</span>" : "<span class='badge badge-danger'>Unverified</span>" } },
+            { text: "status", searchable: true, index: "confirmed", width:"10%", override: function(e){ return (e == 1) ? "<span class='badge badge-info' style='width:70px;'>Verified</span>" : "<span class='badge badge-danger' style='width:70px;'>Unverified</span>" } },
 
            /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 
             
