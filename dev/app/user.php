@@ -9,6 +9,6 @@ class user extends Model
     protected $table = "users";
 
     public function district(){
-    	return $this->belongsTo('App\district', 'district_id', 'id');
+    	return $this->belongsTo('App\District', 'district_id', 'id');
     }
 }
