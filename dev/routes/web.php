@@ -1,5 +1,8 @@
 <?php
 
+use Spatie\Analytics\AnalyticsFacade as Analytics;
+use Spatie\Analytics\Period;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +15,7 @@
 */
 
 Route::get('/riset', function () {
-    return view("welcome");
+    return $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(0));
 });
 
 Route::get('/test', function () {
