@@ -15,7 +15,7 @@ use Spatie\Analytics\Period;
 */
 
 Route::get('/riset', function () {
-    return $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(0));
+    // return $analyticsData = count(Analytics::fetchTotalVisitorsAndPageViews(Period::create(date_create("2018-09-22"), date_create("2018-09-28"))));
 });
 
 Route::get('/test', function () {
