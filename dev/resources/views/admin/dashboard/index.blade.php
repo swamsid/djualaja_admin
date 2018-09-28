@@ -130,26 +130,7 @@
           </div>
         </div>
       </div>
-
-      <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-yellow text-white">
-          <div class="card-body">
-            <h4 class="font-weight-normal mb-3">Jumlah Iklan Baru Hari Ini</h4>
-            <h2 class="font-weight-normal mb-5">{{ $iklan_hari_ini }} Iklan</h2>
-            {{-- <p class="card-text">Incresed by 60%</p> --}}
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-yellow text-white">
-          <div class="card-body">
-            <h4 class="font-weight-normal mb-3">Jumlah Iklan Baru Hari Ini</h4>
-            <h2 class="font-weight-normal mb-5">{{ $iklan_hari_ini }} Iklan</h2>
-            {{-- <p class="card-text">Incresed by 60%</p> --}}
-          </div>
-        </div>
-      </div>
+      
       <div class="col-md-4 stretch-card grid-margin">
         <div class="card bg-gradient-info text-white">
           <div class="card-body">
