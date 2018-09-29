@@ -17,18 +17,35 @@ class dashboard_controller extends Controller
         $date_week = date_create(date('Y-m-d', strtotime('-7 days')));
         $date_mobth = date_create(date('Y-m-d', strtotime('-30 days')));
 
-        $tanggal_chart = []; $nilai_chart = [];
+        $tanggal_chart = []; $nilai_chart = []; $chart_pengiklan_tanggal = []; $chart_pengiklan_v1 = []; $chart_pengiklan_v2 = []; $chart_iklan_value = [];
 
         for ($i = 5; $i >= 1; $i--) {
            $date_create = date_create(date('Y-m-d', strtotime('-'.$i.' days')));
            array_push($tanggal_chart, date('j M', strtotime('-'.$i.' days')));
            array_push($nilai_chart, count(Analytics::fetchVisitorsAndPageViews(Period::create($date_create, $date_create))));
+
+           $skrg = count(DB::table('users')
+                        ->where([[DB::raw('month(created_at)'),'=', date('m', strtotime('-'.($i-1).' months'))], [DB::raw('year(created_at)'),'=',date('Y')]])->get()); 
+
+           $tahun_lalu = count(DB::table('users')
+                        ->where([[DB::raw('month(created_at)'),'=',date('m', strtotime('-'.($i-1).' months'))], [DB::raw('year(created_at)'),'=',date('Y', strtotime('-1 years'))]])->get()); 
+
+           $iklan_skrg = count(DB::table('tb_product_sales')->where([[DB::raw('month(product_created_at)'),'=',date('m', strtotime('-'.($i-1).' months'))], [DB::raw('year(product_created_at)'),'=',date('Y')]])->get());
+
+           array_push($chart_pengiklan_tanggal, date('M', strtotime('-'.($i-1).' months')));
+           array_push($chart_pengiklan_v1, $skrg);
+           array_push($chart_pengiklan_v2, $tahun_lalu);
+           array_push($chart_iklan_value, $iklan_skrg);
         }
 
         $encode_tanggal_chart = json_encode($tanggal_chart);
         $encode_nilai_chart = json_encode($nilai_chart);
+        $encode_chart_pengiklan_tanggal = json_encode($chart_pengiklan_tanggal);
+        $encode_chart_pengiklan_v1 = json_encode($chart_pengiklan_v1);
+        $encode_chart_pengiklan_v2 = json_encode($chart_pengiklan_v2);
+        $encode_chart_iklan_value = json_encode($chart_iklan_value);
 
-        // return $nilai_chart;
+        // return $chart_pengiklan_v1;
 
         // return Analytics::fetchMostVisitedPages(Period::create($today, $today), 3);
         // return Analytics::fetchTopBrowsers(Period::create($today, $today), 10);
@@ -54,6 +71,7 @@ class dashboard_controller extends Controller
     	$user_hari_ini = count(DB::table('users')->where(DB::raw('date(created_at)'), date('Y-m-d'))->get());
 
     	$iklan_bulan_ini = count(DB::table('tb_product_sales')->where([[DB::raw('month(product_created_at)'),'=',date('m')], [DB::raw('year(product_created_at)'),'=',date('Y')]])->get());
+
     	$user_bulan_ini = count(DB::table('users')->where([[DB::raw('month(created_at)'),'=',date('m')], [DB::raw('year(created_at)'),'=',date('Y')]])->get());
 
     	$iklan = DB::table('tb_product_sales')->get();
@@ -61,6 +79,6 @@ class dashboard_controller extends Controller
 
     	$total_token = DB::table('tb_token_transactions')->where(DB::raw('date(created_at)'), date('Y-m-d'))->sum('transaction_total');
 
-    	return view ('admin.dashboard.index', compact('iklan_hari_ini', 'user_hari_ini', 'iklan_bulan_ini', 'user_bulan_ini', 'total_token', 'iklan', 'users', 'month', 'week', 'day', 'encode_nilai_chart', 'encode_tanggal_chart', 'top_browser', 'top_iklan'));
+    	return view ('admin.dashboard.index', compact('iklan_hari_ini', 'user_hari_ini', 'iklan_bulan_ini', 'user_bulan_ini', 'total_token', 'iklan', 'users', 'month', 'week', 'day', 'encode_nilai_chart', 'encode_tanggal_chart', 'top_browser', 'top_iklan', 'encode_chart_pengiklan_tanggal', 'encode_chart_pengiklan_v1', 'encode_chart_pengiklan_v2', 'encode_chart_iklan_value'));
     }
 }

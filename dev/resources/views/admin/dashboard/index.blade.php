@@ -116,13 +116,27 @@
               </div>
             </div>
           </div>
-
+        </div>
       </div>
     </div>
 
     <div class="row">
+      <div class="col-md-6 stretch-card grid-margin">
+        <div class="card" style="background: white; color: #666; box-shadow: 0px 0px 5px #fefefe; padding: 0px 15px;">
+          <canvas id="canvas_pengiklan_baru"></canvas>
+        </div>
+      </div>
+
+      <div class="col-md-6 stretch-card grid-margin">
+        <div class="card" style="background: white; color: #666; box-shadow: 0px 0px 5px #fefefe; padding: 0px 15px;">
+          <canvas id="canvas_iklan_baru"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-yellow text-white">
+        <div class="card bg-gradient-yellow text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Jumlah Iklan Baru Hari Ini</h4>
             <h2 class="font-weight-normal mb-5">{{ $iklan_hari_ini }} Iklan</h2>
@@ -132,7 +146,7 @@
       </div>
       
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-info text-white">
+        <div class="card bg-gradient-info text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Jumlah Iklan Baru Bulan Ini</h4>
             <h2 class="font-weight-normal mb-5">{{ $iklan_bulan_ini }} Iklan</h2>
@@ -141,7 +155,7 @@
         </div>
       </div>
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-primary text-white">
+        <div class="card bg-gradient-primary text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Hasil Penjualan Token Hari Ini</h4>
             <h2 class="font-weight-normal mb-5">Rp. {{ number_format($total_token) }}</h2>
@@ -150,7 +164,7 @@
         </div>
       </div>
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-info text-white">
+        <div class="card bg-gradient-info text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Jumlah Iklan Aktif</h4>
             <h2 class="font-weight-normal mb-5">{{ count($iklan->where('product_status', 'approved')) }} Iklan</h2>
@@ -159,7 +173,7 @@
         </div>
       </div>
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-warning text-white">
+        <div class="card bg-gradient-warning text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Jumlah Iklan Pending</h4>
             <h2 class="font-weight-normal mb-5">{{ count($iklan->where('product_status', 'pending')) }} Iklan</h2>
@@ -168,7 +182,7 @@
         </div>
       </div>
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-danger text-white">
+        <div class="card bg-gradient-danger text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Jumlah Iklan Blocked</h4>
             <h2 class="font-weight-normal mb-5">{{ count($iklan->where('product_status', 'blocked')) }} Iklan</h2>
@@ -177,7 +191,7 @@
         </div>
       </div>
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-primary text-white">
+        <div class="card bg-gradient-primary text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Jumlah Pengguna Baru Hari Ini</h4>
             <h2 class="font-weight-normal mb-5">{{ $user_hari_ini }} Pengguna</h2>
@@ -186,7 +200,7 @@
         </div>
       </div>
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-yellow text-white">
+        <div class="card bg-gradient-yellow text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Jumlah Pengguna Baru Bulan Ini</h4>
             <h2 class="font-weight-normal mb-5">{{ $user_bulan_ini }} Pengguna</h2>
@@ -195,7 +209,7 @@
         </div>
       </div>
       <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-warning text-white">
+        <div class="card bg-gradient-warning text-white" style="height: 9em;">
           <div class="card-body">
             <h4 class="font-weight-normal mb-3">Jumlah Total Pengguna </h4>
             <h2 class="font-weight-normal mb-5">{{ count($users) }} Pengguna</h2>
@@ -217,6 +231,9 @@
 
     <script type="text/javascript">
         
+        {{-- console.log({!! $encode_chart_pengiklan_v1 !!}); --}}
+        var color = Chart.helpers.color;
+
         var config = {
           type: 'line',
           data: {
@@ -263,69 +280,91 @@
           }
         };
 
-        window.onload = function() {
-          var ctx = document.getElementById('canvas').getContext('2d');
-          window.myLine = new Chart(ctx, config);
+        var config_2 = {
+          type: 'line',
+          data: {
+            labels: {!! $encode_chart_pengiklan_tanggal !!},
+            datasets: [{
+              label: 'Tahun Ini',
+              fill: false,
+              backgroundColor: window.chartColors.yellow,
+              borderColor: window.chartColors.yellow,
+              data: {!! $encode_chart_pengiklan_v1 !!},
+            }, {
+              label: 'Tahun Lalu',
+              fill: false,
+              borderColor: window.chartColors.green,
+              borderDash: [5, 5],
+              data: {!! $encode_chart_pengiklan_v2 !!},
+              fill: true,
+            }]
+          },
+          options: {
+            responsive: true,
+            title: {
+              display: true,
+              text: 'Record Pengiklan Baru (5 Bulan terakhir)'
+            },
+            tooltips: {
+              mode: 'index',
+              intersect: false,
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: true
+            },
+            scales: {
+              xAxes: [{
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Bulan'
+                }
+              }],
+              yAxes: [{
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Value'
+                }
+              }]
+            }
+          }
         };
 
-        document.getElementById('randomizeData').addEventListener('click', function() {
-          config.data.datasets.forEach(function(dataset) {
-            dataset.data = dataset.data.map(function() {
-              return randomScalingFactor();
-            });
+        var barChartData = {
+          labels: {!! $encode_chart_pengiklan_tanggal !!},
+          datasets: [{
+            label: 'Iklan',
+            backgroundColor: color(window.chartColors.black).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: {!! $encode_chart_iklan_value !!}
+          }]
+        };
 
+        window.onload = function() {
+          var ctx = document.getElementById('canvas').getContext('2d');
+          var ctx_2 = document.getElementById('canvas_pengiklan_baru').getContext('2d');
+          var ctx_3 = document.getElementById('canvas_iklan_baru').getContext('2d');
+          window.myBar = new Chart(ctx_3, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Record Jumlah Iklan (5 Bulan Terakhir)'
+              }
+            }
           });
+          window.myLine = new Chart(ctx, config);
+          window.myLine = new Chart(ctx_2, config_2);
+        };
 
-          window.myLine.update();
-        });
-
-        var colorNames = Object.keys(window.chartColors);
-        document.getElementById('addDataset').addEventListener('click', function() {
-          var colorName = colorNames[config.data.datasets.length % colorNames.length];
-          var newColor = window.chartColors[colorName];
-          var newDataset = {
-            label: 'Dataset ' + config.data.datasets.length,
-            backgroundColor: newColor,
-            borderColor: newColor,
-            data: [],
-            fill: false
-          };
-
-          for (var index = 0; index < config.data.labels.length; ++index) {
-            newDataset.data.push(randomScalingFactor());
-          }
-
-          config.data.datasets.push(newDataset);
-          window.myLine.update();
-        });
-
-        document.getElementById('addData').addEventListener('click', function() {
-          if (config.data.datasets.length > 0) {
-            var month = MONTHS[config.data.labels.length % MONTHS.length];
-            config.data.labels.push(month);
-
-            config.data.datasets.forEach(function(dataset) {
-              dataset.data.push(randomScalingFactor());
-            });
-
-            window.myLine.update();
-          }
-        });
-
-        document.getElementById('removeDataset').addEventListener('click', function() {
-          config.data.datasets.splice(0, 1);
-          window.myLine.update();
-        });
-
-        document.getElementById('removeData').addEventListener('click', function() {
-          config.data.labels.splice(-1, 1); // remove the label first
-
-          config.data.datasets.forEach(function(dataset) {
-            dataset.data.pop();
-          });
-
-          window.myLine.update();
-        });
     </script>
 
 @endsection
