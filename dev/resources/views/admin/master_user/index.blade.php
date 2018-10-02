@@ -178,7 +178,7 @@
               <div class="col-md-7" style="background: none; border-right: 1px solid #ccc;">
                 <div class="row">
                   <div class="col-md-6" style="background: none;">
-                    <img width="100%" class="img-responsive" :src="image" :alt="'First slide'">
+                    <img width="100%" class="img-responsive" :src="image" :alt="'First slide'" style="margin-top: 20px;">
                   </div>
 
                   <div class="col-md-6" style="padding: 0px; padding-right: 10px; padding-top: 5px;">
@@ -210,13 +210,19 @@
                       </tr>
 
                       <tr>
+                        <td>Total Iklan  </td>
+                        <td class="answer">
+                          @{{ dataTable.single_data.iklan }} Iklan Aktif
+                        </td>
+                      </tr>
+
+                      <tr>
                         <td>Status  </td>
                         <td class="answer">
                           <span class='badge badge-info' v-if='dataTable.single_data.confirmed == 1'>Verified</span>
                           <span class='badge badge-danger' v-if='dataTable.single_data.confirmed != 1'>Unverified</span>
                         </td>
                       </tr>
-
 
                     </table>
                   </div>
@@ -430,6 +436,9 @@
             { text: "Nama Pengiklan", searchable: true, index: "name", width:"15%", override: false},
             { text: "Tanggal Gabung", searchable: true, index: "created_at", width:"20%", override: false },
             { text: "Kota/Kabupaten", searchable: true, index: "kota", width:"10%", override: false },
+            { text: "Jumlan Iklan", searchable: true, index: "iklan", width:"12%", override: function(e){
+              return e+' Iklan Aktif';
+            } },
             { text: "status", searchable: true, index: "confirmed", width:"10%", override: function(e){ return (e == 1) ? "<span class='badge badge-info' style='width:70px;'>Verified</span>" : "<span class='badge badge-danger' style='width:70px;'>Unverified</span>" } },
 
            /* semua object yang ada di column dibutuhkan sehingga tidak boleh ada satupun object yang tertinggal. 

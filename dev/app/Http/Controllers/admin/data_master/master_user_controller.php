@@ -29,11 +29,36 @@ class master_user_controller extends Controller
     }
 
     public function list(){
-        $data = DB::table('users')
-                ->join('districts', 'districts.id', '=', 'users.district_id')
-                ->join('regencies', 'regencies.id', '=', 'districts.regency_id')
-                ->select('users.*', 'regencies.name as kota')->get();
+        // $data = user::join('districts', 'districts.id', '=', 'users.district_id')
+        //         ->join('regencies', 'regencies.id', '=', 'districts.regency_id')
+        //         ->with(['iklan' => function($query){
+        //             return $query->whereNull('banned_at')
+        //                             ->whereNull('product_deleted_at')
+        //                             ->where('product_status', '!=', 'blocked')
+        //                             ->where('product_status', '!=', 'delete')
+        //                             ->select('user_id', DB::raw('count(product_id) as iklan'))
+        //                             ->groupBy('user_id');
+        //         }])
+        //         ->select('users.*', 'districts.name as kecamatan', 'regencies.name as kota')
+        //         ->get();
 
+        $data = DB::select(DB::raw("
+                    select a.*, c.name as kecamatan, d.name as kota, count(b.product_id) as iklan from users a
+                        left join tb_product_sales b 
+                            on a.id = b.user_id
+                            and b.product_status != 'blocked'
+                            and b.product_status != 'delete'
+                            and b.product_deleted_at is null
+                            and b.banned_at is null
+                        join districts c on a.district_id = c.id
+                        join regencies d on c.regency_id = d.id
+                    group by a.id, a.district_id, a.name, a.slug_name, a.email, 
+                    a.`password`, a.phone, a.address, a.longtitude, a.latitude, a.token, a.facebook, a.instagram, 
+                    a.photo, a.`status`, a.state, a.remember_token, a.created_at, a.updated_at, a.confirmed, a.confirmation_code, 
+                    kecamatan, kota
+                "));
+
+        // return "okee";
         return $data;
     }
 
