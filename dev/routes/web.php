@@ -14,9 +14,10 @@ use Spatie\Analytics\Period;
 |
 */
 
-Route::get('/riset', function () {
-    // return $analyticsData = count(Analytics::fetchTotalVisitorsAndPageViews(Period::create(date_create("2018-09-22"), date_create("2018-09-28"))));
-});
+Route::get('/riset', [
+	'uses' 	=> 'admin\laporan\laporan_pengiklan_controller@tes_excel',
+	'as'	=> 'laporan_pengiklan.submit'
+]);
 
 Route::get('/test', function () {
     return view("admin.login.index");
@@ -329,9 +330,14 @@ Route::group(['middleware' => 'auth'], function () {
 			'as'	=> 'laporan_pengiklan.setting'
 		]);
 
-		Route::post("/laporan/laporan_pengiklan/submit", [
+		Route::get("/laporan/laporan_pengiklan/submit", [
 			'uses' 	=> 'admin\laporan\laporan_pengiklan_controller@submit',
 			'as'	=> 'laporan_pengiklan.submit'
+		]);
+
+		Route::get("/laporan/laporan_pengiklan/export/pdf", [
+			'uses' 	=> 'admin\laporan\laporan_pengiklan_controller@export_pdf',
+			'as'	=> 'laporan_pengiklan.pdf'
 		]);
 	//laporan pengiklan end
 
@@ -341,9 +347,14 @@ Route::group(['middleware' => 'auth'], function () {
 			'as'	=> 'laporan_iklan.setting'
 		]);
 
-		Route::post("/laporan/laporan_iklan/submit", [
+		Route::get("/laporan/laporan_iklan/submit", [
 			'uses' 	=> 'admin\laporan\laporan_iklan_controller@submit',
 			'as'	=> 'laporan_iklan.submit'
+		]);
+
+		Route::get("/laporan/laporan_iklan/export/pdf", [
+			'uses' 	=> 'admin\laporan\laporan_iklan_controller@export_pdf',
+			'as'	=> 'laporan_iklan.pdf'
 		]);
 	//laporan iklan end
 

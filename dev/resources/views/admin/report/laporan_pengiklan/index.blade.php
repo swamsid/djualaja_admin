@@ -24,6 +24,24 @@
       text-align: center;
       border: 1px solid #ccc;
     }
+
+    #navigation ul{
+      float: right;
+      padding-right: 110px;
+    }
+
+    #navigation ul li{
+      color: white;
+      font-size: 15pt;
+      list-style-type: none;
+      display: inline-block;
+      margin-left: 40px;
+      margin-top: 10px;
+    }
+
+    #navigation ul li a{
+      color: white;
+    }
   </style>
 
 </head>
@@ -42,6 +60,24 @@
 
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
+
+      <div class="row" id="navigation">
+        <div class="col-md-12" style="background: #333;">
+          <ul>
+              <li>
+                <a href="{{ route('laporan_pengiklan.pdf', explode('?', $_SERVER['REQUEST_URI'])[1]) }}">
+                  <i class="fa fa-file-excel-o" style="cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="Download Excel"></i>
+                </a>
+              </li>
+
+              <li onclick="window.print()">
+                  <i class="fa fa-print" style="cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="Cetak Laporan"></i>
+              </li>
+
+            </ul>
+        </div>
+      </div>
+
       <div class="row" style="margin-top: 30px;">
         <div class="col-md-10 offset-1" style="background: white;">
           <div class="col-md-12" style="padding: 0px;">
@@ -65,8 +101,9 @@
                   <th>No</th>
                   <th>Nama Pengiklan</th>
                   <th>Email Pengiklan</th>
-                  <th>Alamat Pengiklan</th>
+                  <th>Provinsi</th>
                   <th>Kota</th>
+                  <th>Total Iklan</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -78,8 +115,9 @@
                     <td class="text-center">{{ ($key+1) }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->address }}</td>
+                    <td>{{ $user->district->name }}</td>
                     <td>{{ $user->district->regency->name }}</td>
+                    <td>{{ (count($user->iklan) > 0) ? $user->iklan[0]->total_iklan : 0 }}</td>
                     <td>
                       {{ ($user->confirmed == 1) ? 'verified' : 'unverified' }}
                     </td>

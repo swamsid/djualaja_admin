@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12" style="border-right: 1px solid #eee; font-size: 0.9em; color: #3a3f51;">
-  	<form method="post" action="{{ route('laporan_iklan.submit') }}" target="_blank">
+  	<form method="get" action="{{ route('laporan_iklan.submit') }}" target="_blank">
   		<input type="hidden" name="_token" value="{{ csrf_token() }}" readonly>
 	    <table id="form-table" border="0" width="100%">
 	      <tr>
@@ -32,11 +32,24 @@
 	      </tr>
 
 	      <tr>
-	        <td width="30%" class="title">Bulan</td>
+	        <td width="30%" class="title">Status Iklan</td>
+	        <td colspan="2" style="padding: 0px 0px 0px 10px;">
+	            <select class="form-control" name="status">
+	            	<option value="approved">Approved</option>
+	            	<option value="blocked">Blocked</option>
+	            	<option value="pending">Pending</option>
+	            </select>
+	        </td>
+	      </tr>
+
+	      <tr>
+	        <td width="30%" class="title" style="padding: 20px 0px;">Bulan</td>
 	        <td colspan="2" style="padding: 0px 0px 0px 10px;">
 	            <input type="text" class="form-control datePick" placeholder="Pilih Tanggal" style="cursor: pointer;" readonly name="bulan">
 	        </td>
 	      </tr>
+
+	      
 
 	      <tr>
 	        <td width="30%" class="title"></td>
