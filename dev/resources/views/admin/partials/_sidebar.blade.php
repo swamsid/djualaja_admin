@@ -44,6 +44,10 @@
                     <a class="nav-link" href="{{ url('/filter') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Filter</a>
                   </li>
 
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ url('/slider') }}" tppabs="http://localhost:7777/djualaja_admin/master-user">Master Slider</a>
+                  </li>
+
 
                 </ul>
               </div>

@@ -2,6 +2,7 @@ vendor/
 node_modules/
 npm-debug.log
 images/popup/
+images/front_end/
 
 # Laravel 4 specific
 bootstrap/compiled.php

@@ -14,9 +14,9 @@ use Spatie\Analytics\Period;
 |
 */
 
-Route::get('/riset', [
-	'uses' 	=> 'admin\laporan\laporan_pengiklan_controller@tes_excel',
-	'as'	=> 'laporan_pengiklan.submit'
+Route::post('/riset', [
+	'uses' 	=> 'admin\data_master\slider_controller@upload',
+	'as'	=> 'riset.riset'
 ]);
 
 Route::get('/test', function () {
@@ -323,6 +323,55 @@ Route::group(['middleware' => 'auth'], function () {
 			'as'	=> 'filter.delete'
 		]);
 	//route filter
+
+
+	// route filter
+		Route::get("/slider", [
+			'uses' 	=> 'admin\data_master\slider_controller@index',
+			'as'	=> 'slider.index'
+		]);
+
+		Route::get("/slider/get", [
+			'uses' 	=> 'admin\data_master\slider_controller@get',
+			'as'	=> 'slider.get'
+		]);
+
+		Route::post("/slider/store", [
+			'uses' 	=> 'admin\data_master\slider_controller@store',
+			'as'	=> 'slider.store'
+		]);
+
+		Route::post("/slider/update", [
+			'uses' 	=> 'admin\data_master\slider_controller@update',
+			'as'	=> 'slider.update'
+		]);
+
+		Route::post("/slider/delete", [
+			'uses' 	=> 'admin\data_master\slider_controller@delete',
+			'as'	=> 'slider.delete'
+		]);
+
+		// Route::get("/filter/data/list", [
+		// 	'uses' 	=> 'admin\data_master\filter_controller@list',
+		// 	'as'	=> 'filter.list'
+		// ]);
+
+		// Route::post("/filter/save", [
+		// 	'uses' 	=> 'admin\data_master\filter_controller@save',
+		// 	'as'	=> 'filter.save'
+		// ]);
+
+		// Route::post("/filter/update", [
+		// 	'uses' 	=> 'admin\data_master\filter_controller@update',
+		// 	'as'	=> 'filter.update'
+		// ]);
+
+		// Route::post("/filter/delete", [
+		// 	'uses' 	=> 'admin\data_master\filter_controller@delete',
+		// 	'as'	=> 'filter.delete'
+		// ]);
+	//route filter
+
 
 	// route laporan pengiklan
 		Route::get("/laporan/laporan_pengiklan/setting", [

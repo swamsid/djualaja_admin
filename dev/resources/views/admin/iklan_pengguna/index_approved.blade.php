@@ -534,6 +534,7 @@
         },
 
         view_one: function(id){
+          this.contentHeader = 'asd';
           this.dataTable.single_data = [];
           axios.post(baseUrl + "/iklan_pengguna/data/get_iklan", {id: id})
                   .then((response) => {
